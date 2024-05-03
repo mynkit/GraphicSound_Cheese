@@ -13,8 +13,8 @@ void ofApp::setup(){
     ellipse03TranslateRateDirection = true;
     ellipse03TranslateRateSpeed = 1. * (1. / SAMPLERATE);
     
-    rotaryMechanismBottomDegree = 0.;
-    rotaryMechanismBottomDegreeSpeed = 1;
+    rotaryMechanismBottomDegree = 270.;
+    rotaryMechanismBottomDegreeSpeed = 0.;
 }
 
 //--------------------------------------------------------------
