@@ -14,7 +14,7 @@ void ofApp::setup(){
     ellipse03TranslateRateSpeed = 1. * (1. / SAMPLERATE);
     
     rotaryMechanismBottomDegree = 0.;
-    rotaryMechanismBottomDegreeSpeed = 0.1;
+    rotaryMechanismBottomDegreeSpeed = 1;
 }
 
 //--------------------------------------------------------------
@@ -85,7 +85,7 @@ void ofApp::update(){
             c0-1.06,0-3.09,0-3.09V66.42"/>
     </g>
     </svg>
-    )",int(ofGetWidth()*1.3), int(ofGetHeight()*1.3), ellipse03TranslateRate*38, ellipse03TranslateRate*38, 153.03+28.06*cos(rotaryMechanismBottomDegree), 470.93+28.06*sin(rotaryMechanismBottomDegree), 495.02+28.06*cos(rotaryMechanismBottomDegree), 470.93+28.06*sin(rotaryMechanismBottomDegree),153.03+28.06*cos(rotaryMechanismBottomDegree),470.93+28.06*sin(rotaryMechanismBottomDegree),495.02+28.06*cos(rotaryMechanismBottomDegree), 470.93+28.06*sin(rotaryMechanismBottomDegree));
+    )",int(ofGetWidth()*1.3), int(ofGetHeight()*1.3), ellipse03TranslateRate*38, ellipse03TranslateRate*38, 153.03+28.06*cos(DegToRad(rotaryMechanismBottomDegree)), 470.93+28.06*sin(DegToRad(rotaryMechanismBottomDegree)), 495.02+28.06*cos(DegToRad(rotaryMechanismBottomDegree)), 470.93+28.06*sin(DegToRad(rotaryMechanismBottomDegree)),153.03+28.06*cos(DegToRad(rotaryMechanismBottomDegree)),470.93+28.06*sin(DegToRad(rotaryMechanismBottomDegree)),495.02+28.06*cos(DegToRad(rotaryMechanismBottomDegree)), 470.93+28.06*sin(DegToRad(rotaryMechanismBottomDegree)));
     
     svg.loadFromString(svgCode);
     updateParam();
@@ -123,8 +123,9 @@ void ofApp::updateParam(){
         }
     }
     
-    // 回転機構
+    // 回転機構下
     rotaryMechanismBottomDegree += rotaryMechanismBottomDegreeSpeed;
+    if (rotaryMechanismBottomDegree>=360) {rotaryMechanismBottomDegree=0.;}
 }
 
 //--------------------------------------------------------------

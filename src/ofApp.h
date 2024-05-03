@@ -32,6 +32,10 @@ public:
     
     float rotaryMechanismBottomDegree;
     float rotaryMechanismBottomDegreeSpeed;
+    
+    float DegToRad(float rad) {
+        return PI * rad / 180.;
+    }
 		
 private:
     ofxJoystick joy_;
