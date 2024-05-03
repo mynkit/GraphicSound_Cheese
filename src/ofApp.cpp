@@ -12,6 +12,9 @@ void ofApp::setup(){
     ellipse03TranslateRate = 0.;
     ellipse03TranslateRateDirection = true;
     ellipse03TranslateRateSpeed = 1. * (1. / SAMPLERATE);
+    
+    rotaryMechanismBottomDegree = 0.;
+    rotaryMechanismBottomDegreeSpeed = 0.1;
 }
 
 //--------------------------------------------------------------
@@ -42,9 +45,9 @@ void ofApp::update(){
     </g>
     <g id="回転機構_x5F_下">
         <g>
-            <circle style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="153.03" cy="442.87" r="6.06"/>
-            <circle style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="495.02" cy="442.87" r="6.06"/>
-            <line style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" x1="153.03" y1="442.87" x2="495.02" y2="442.87"/>
+            <circle style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="%f" cy="%f" r="6.06" />
+            <circle style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="%f" cy="%f" r="6.06" />
+            <line style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" x1="%f" y1="%f" x2="%f" y2="%f" />
         </g>
     </g>
     <g id="回転機構_x5F_上">
@@ -82,7 +85,7 @@ void ofApp::update(){
             c0-1.06,0-3.09,0-3.09V66.42"/>
     </g>
     </svg>
-    )",int(ofGetWidth()*1.3), int(ofGetHeight()*1.3), ellipse03TranslateRate*38, ellipse03TranslateRate*38);
+    )",int(ofGetWidth()*1.3), int(ofGetHeight()*1.3), ellipse03TranslateRate*38, ellipse03TranslateRate*38, 153.03+28.06*cos(rotaryMechanismBottomDegree), 470.93+28.06*sin(rotaryMechanismBottomDegree), 495.02+28.06*cos(rotaryMechanismBottomDegree), 470.93+28.06*sin(rotaryMechanismBottomDegree),153.03+28.06*cos(rotaryMechanismBottomDegree),470.93+28.06*sin(rotaryMechanismBottomDegree),495.02+28.06*cos(rotaryMechanismBottomDegree), 470.93+28.06*sin(rotaryMechanismBottomDegree));
     
     svg.loadFromString(svgCode);
     updateParam();
@@ -103,6 +106,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::updateParam(){
+    // 楕円の往復
     if (ellipse03TranslateRateDirection) {
         if (1 - ellipse03TranslateRate >= ellipse03TranslateRateSpeed) {
             ellipse03TranslateRate += ellipse03TranslateRateSpeed;
@@ -118,6 +122,9 @@ void ofApp::updateParam(){
             ellipse03TranslateRateDirection = true;
         }
     }
+    
+    // 回転機構
+    rotaryMechanismBottomDegree += rotaryMechanismBottomDegreeSpeed;
 }
 
 //--------------------------------------------------------------

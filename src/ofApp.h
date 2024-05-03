@@ -29,6 +29,9 @@ public:
     float ellipse03TranslateRate;
     float ellipse03TranslateRateDirection;
     float ellipse03TranslateRateSpeed;
+    
+    float rotaryMechanismBottomDegree;
+    float rotaryMechanismBottomDegreeSpeed;
 		
 private:
     ofxJoystick joy_;
