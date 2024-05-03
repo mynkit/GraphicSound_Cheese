@@ -4,12 +4,14 @@
 #include "ofxJoystick.h"
 #include "ofxSvg.h"
 #include "StringFormat.h"
+#define SAMPLERATE 60
 
 class ofApp : public ofBaseApp{
 
 public:
     void setup();
     void update();
+    void updateParam();
     void draw();
 
     void keyPressed(int key);
@@ -24,7 +26,9 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     
-    float ellipse03Translate;
+    float ellipse03TranslateRate;
+    float ellipse03TranslateRateDirection;
+    float ellipse03TranslateRateSpeed;
 		
 private:
     ofxJoystick joy_;

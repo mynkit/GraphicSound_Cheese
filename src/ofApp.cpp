@@ -2,12 +2,16 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofSetFrameRate(60);
+    ofSetFrameRate(SAMPLERATE);
     ofEnableAntiAliasing();
     ofEnableSmoothing();
     ofEnableArbTex();
     ofEnablePointSprites();
     joy_.setup(GLFW_JOYSTICK_1);
+    
+    ellipse03TranslateRate = 0.;
+    ellipse03TranslateRateDirection = true;
+    ellipse03TranslateRateSpeed = 1. * (1. / SAMPLERATE);
 }
 
 //--------------------------------------------------------------
@@ -22,7 +26,7 @@ void ofApp::update(){
         </g>
     </g>
     <g id="楕円03">
-        <ellipse style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="255.94" cy="258.74" rx="91.61" ry="25.9" transform="translate(38, 38) "/>
+        <ellipse style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="255.94" cy="258.74" rx="91.61" ry="25.9" transform="translate(%f, %f) "/>
     </g>
     <g id="楕円02">
         <ellipse style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="255.94" cy="238.49" rx="91.61" ry="25.9"/>
@@ -78,9 +82,10 @@ void ofApp::update(){
             c0-1.06,0-3.09,0-3.09V66.42"/>
     </g>
     </svg>
-    )", int(ofGetWidth()*1.3), int(ofGetHeight()*1.3));
+    )",int(ofGetWidth()*1.3), int(ofGetHeight()*1.3), ellipse03TranslateRate*38, ellipse03TranslateRate*38);
     
     svg.loadFromString(svgCode);
+    updateParam();
     
     // chack all button for push
     for (int i = 0; i < joy_.getButtonNum(); i++) {
@@ -92,6 +97,25 @@ void ofApp::update(){
         }
         if (joy_.isRelease(i)) {
             ofLog() << "release :" << i;
+        }
+    }
+}
+
+//--------------------------------------------------------------
+void ofApp::updateParam(){
+    if (ellipse03TranslateRateDirection) {
+        if (1 - ellipse03TranslateRate >= ellipse03TranslateRateSpeed) {
+            ellipse03TranslateRate += ellipse03TranslateRateSpeed;
+        } else {
+            ellipse03TranslateRate = 1.;
+            ellipse03TranslateRateDirection = false;
+        }
+    } else {
+        if (ellipse03TranslateRate >= ellipse03TranslateRateSpeed) {
+            ellipse03TranslateRate -= ellipse03TranslateRateSpeed;
+        } else {
+            ellipse03TranslateRate = 0.;
+            ellipse03TranslateRateDirection = true;
         }
     }
 }
