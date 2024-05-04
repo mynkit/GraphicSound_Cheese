@@ -15,10 +15,27 @@ void ofApp::setup(){
     
     rotaryMechanismBottomDegree = 270.;
     rotaryMechanismBottomDegreeSpeed = 0.;
+    
+    rotaryMechanismTopDegree = 90.;
+    rotaryMechanismTopDegreeSpeed = 0.;
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    
+    float ellipse03Translate = ellipse03TranslateRate*38;
+    
+    float rotaryMechanismBottomX1 = 153.03+28.06*cos(DegToRad(rotaryMechanismBottomDegree));
+    float rotaryMechanismBottomY1 = 470.93+28.06*sin(DegToRad(rotaryMechanismBottomDegree));
+    float rotaryMechanismBottomX2 = 495.02+28.06*cos(DegToRad(rotaryMechanismBottomDegree));
+    float rotaryMechanismBottomY2 = 470.93+28.06*sin(DegToRad(rotaryMechanismBottomDegree));
+    
+    float rotaryMechanismTopX1 = 454.84+57.81*cos(DegToRad(rotaryMechanismTopDegree));
+    float rotaryMechanismTopY1 = 191.45+57.81*sin(DegToRad(rotaryMechanismTopDegree));
+    float rotaryMechanismTopX2 = 454.84+57.81*cos(DegToRad(rotaryMechanismTopDegree+180));
+    float rotaryMechanismTopY2 = 191.45+57.81*sin(DegToRad(rotaryMechanismTopDegree+180));
+    
+    
     string svgCode = StringFormat(R"(
     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                               width="%d" height="%d" viewBox="55 70 650.28 665.28" style="enable-background:new 55 70 650.28 665.28;" xml:space="preserve">
@@ -51,9 +68,9 @@ void ofApp::update(){
         </g>
     </g>
     <g id="回転機構_x5F_上">
-        <circle style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="454.84" cy="249.26" r="24.2"/>
-        <circle style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="454.84" cy="133.64" r="9.74"/>
-        <line style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" x1="454.84" y1="133.64" x2="454.84" y2="249.26"/>
+        <circle style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="%f" cy="%f" r="24.2"/>
+        <circle style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="%f" cy="%f" r="9.74"/>
+        <line style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" x1="%f" y1="%f" x2="%f" y2="%f"/>
     </g>
     <g id="カビ01">
         <circle cx="228.21" cy="89.93" r="12.85"/>
@@ -85,7 +102,7 @@ void ofApp::update(){
             c0-1.06,0-3.09,0-3.09V66.42"/>
     </g>
     </svg>
-    )",int(ofGetWidth()*1.3), int(ofGetHeight()*1.3), ellipse03TranslateRate*38, ellipse03TranslateRate*38, 153.03+28.06*cos(DegToRad(rotaryMechanismBottomDegree)), 470.93+28.06*sin(DegToRad(rotaryMechanismBottomDegree)), 495.02+28.06*cos(DegToRad(rotaryMechanismBottomDegree)), 470.93+28.06*sin(DegToRad(rotaryMechanismBottomDegree)),153.03+28.06*cos(DegToRad(rotaryMechanismBottomDegree)),470.93+28.06*sin(DegToRad(rotaryMechanismBottomDegree)),495.02+28.06*cos(DegToRad(rotaryMechanismBottomDegree)), 470.93+28.06*sin(DegToRad(rotaryMechanismBottomDegree)));
+    )",int(ofGetWidth()*1.3), int(ofGetHeight()*1.3), ellipse03Translate, ellipse03Translate, rotaryMechanismBottomX1, rotaryMechanismBottomY1, rotaryMechanismBottomX2, rotaryMechanismBottomY1,rotaryMechanismBottomX1,rotaryMechanismBottomY2,rotaryMechanismBottomX2, rotaryMechanismBottomY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2);
     
     svg.loadFromString(svgCode);
     updateParam();
@@ -126,6 +143,10 @@ void ofApp::updateParam(){
     // 回転機構下
     rotaryMechanismBottomDegree += rotaryMechanismBottomDegreeSpeed;
     if (rotaryMechanismBottomDegree>=360) {rotaryMechanismBottomDegree=0.;}
+    
+    // 回転機構上
+    rotaryMechanismTopDegree += rotaryMechanismTopDegreeSpeed;
+    if (rotaryMechanismTopDegree<=0) {rotaryMechanismTopDegree=360.;}
 }
 
 //--------------------------------------------------------------

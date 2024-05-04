@@ -33,6 +33,9 @@ public:
     float rotaryMechanismBottomDegree;
     float rotaryMechanismBottomDegreeSpeed;
     
+    float rotaryMechanismTopDegree;
+    float rotaryMechanismTopDegreeSpeed;
+    
     float DegToRad(float rad) {
         return PI * rad / 180.;
     }
