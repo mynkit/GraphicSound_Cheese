@@ -26,6 +26,7 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     
+    bool ellipse03Move;
     float ellipse03TranslateRate;
     float ellipse03TranslateRateDirection;
     float ellipse03TranslateRateSpeed;

@@ -13,6 +13,7 @@ void ofApp::setup(){
     ellipse03TranslateRateDirection = true;
     ellipse03TranslateRateSpeed = 1. * (1. / SAMPLERATE);
     
+    ellipse03Move = true;
     rotaryMechanismBottomDegree = 270.;
     rotaryMechanismBottomDegreeSpeed = 0.;
     
@@ -126,19 +127,21 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::updateParam(){
     // 楕円の往復
-    if (ellipse03TranslateRateDirection) {
-        if (1 - ellipse03TranslateRate >= ellipse03TranslateRateSpeed) {
-            ellipse03TranslateRate += ellipse03TranslateRateSpeed;
+    if (ellipse03Move || (ellipse03TranslateRate>0 && ellipse03TranslateRate<1)) {
+        if (ellipse03TranslateRateDirection) {
+            if (1 - ellipse03TranslateRate >= ellipse03TranslateRateSpeed) {
+                ellipse03TranslateRate += ellipse03TranslateRateSpeed;
+            } else {
+                ellipse03TranslateRate = 1.;
+                ellipse03TranslateRateDirection = false;
+            }
         } else {
-            ellipse03TranslateRate = 1.;
-            ellipse03TranslateRateDirection = false;
-        }
-    } else {
-        if (ellipse03TranslateRate >= ellipse03TranslateRateSpeed) {
-            ellipse03TranslateRate -= ellipse03TranslateRateSpeed;
-        } else {
-            ellipse03TranslateRate = 0.;
-            ellipse03TranslateRateDirection = true;
+            if (ellipse03TranslateRate >= ellipse03TranslateRateSpeed) {
+                ellipse03TranslateRate -= ellipse03TranslateRateSpeed;
+            } else {
+                ellipse03TranslateRate = 0.;
+                ellipse03TranslateRateDirection = true;
+            }
         }
     }
     
@@ -181,8 +184,14 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     switch (key) {
-        case 't':
+        case 'l':
             rotaryMechanismTopTime = 0;
+            break;
+        case 'r':
+            rotaryMechanismTopTime = 0;
+            break;
+        case 'y':
+            ellipse03Move = !ellipse03Move;
             break;
     }
 }
