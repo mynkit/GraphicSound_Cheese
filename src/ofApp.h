@@ -4,7 +4,7 @@
 #include "ofxJoystick.h"
 #include "ofxSvg.h"
 #include "StringFormat.h"
-#define SAMPLERATE 30
+#define SAMPLERATE 60
 
 class ofApp : public ofBaseApp{
 
@@ -35,6 +35,7 @@ public:
     
     float rotaryMechanismTopDegree;
     int rotaryMechanismTopTime;
+    int initRotaryMechanismTopTime;
     
     float DegToRad(float rad) {
         return PI * rad / 180.;
