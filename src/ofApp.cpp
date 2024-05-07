@@ -190,7 +190,7 @@ void ofApp::keyPressed(int key){
         case 'r':
             rotaryMechanismTopTime = 0;
             break;
-        case 'y':
+        case 'x':
             ellipse03Move = !ellipse03Move;
             break;
     }
