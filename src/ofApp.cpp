@@ -17,7 +17,7 @@ void ofApp::setup(){
     rotaryMechanismBottomDegreeSpeed = 0.;
     
     rotaryMechanismTopDegree = 90.;
-    rotaryMechanismTopTime = 0;
+    rotaryMechanismTopTime = 100;
     
 }
 
@@ -164,7 +164,9 @@ void ofApp::updateParam(){
         rotaryMechanismTopDegree = 90;
     }
     
-    rotaryMechanismTopTime += 1;
+    if (rotaryMechanismTopTime <= 80) {
+        rotaryMechanismTopTime += 1;
+    }
     
 }
 
@@ -177,7 +179,11 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+    switch (key) {
+        case 't':
+            rotaryMechanismTopTime = 0;
+            break;
+    }
 }
 
 //--------------------------------------------------------------
