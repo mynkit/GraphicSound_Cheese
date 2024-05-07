@@ -17,7 +17,8 @@ void ofApp::setup(){
     rotaryMechanismBottomDegreeSpeed = 0.;
     
     rotaryMechanismTopDegree = 90.;
-    rotaryMechanismTopDegreeSpeed = 0.;
+    rotaryMechanismTopTime = 0;
+    
 }
 
 //--------------------------------------------------------------
@@ -142,11 +143,29 @@ void ofApp::updateParam(){
     
     // 回転機構下
     rotaryMechanismBottomDegree += rotaryMechanismBottomDegreeSpeed;
-    if (rotaryMechanismBottomDegree>=360) {rotaryMechanismBottomDegree=0.;}
+    if (rotaryMechanismBottomDegree>=360) {rotaryMechanismBottomDegree-=360.;}
     
     // 回転機構上
-    rotaryMechanismTopDegree += rotaryMechanismTopDegreeSpeed;
-    if (rotaryMechanismTopDegree<=0) {rotaryMechanismTopDegree=360.;}
+    if (rotaryMechanismTopTime <= 5) {
+        rotaryMechanismTopDegree = ofMap(rotaryMechanismTopTime, 0, 5, 90, -90);
+    } else if (rotaryMechanismTopTime <= 23) {
+        rotaryMechanismTopDegree = ofMap(rotaryMechanismTopTime, 5, 23, -90, -90-720);
+    } else if (rotaryMechanismTopTime <= 33) {
+        rotaryMechanismTopDegree = ofMap(rotaryMechanismTopTime, 23, 33, -90, -90-360);
+    } else if (rotaryMechanismTopTime <= 45) {
+        float seed = ofMap(rotaryMechanismTopTime, 33, 45, 0., 1.);
+        rotaryMechanismTopDegree = ofMap(pow(seed,0.95), 0., 1., -90, -90-350);
+    } else if (rotaryMechanismTopTime <= 56) {
+        float seed = ofMap(rotaryMechanismTopTime, 45, 56, 0., 1.);
+        rotaryMechanismTopDegree = ofMap(pow(seed,0.9), 0., 1., -80, -90-180);
+    } else if (rotaryMechanismTopTime <= 80) {
+        rotaryMechanismTopDegree = 90 - 30 * sin((PI/8.) * (rotaryMechanismTopTime-56));
+    } else {
+        rotaryMechanismTopDegree = 90;
+    }
+    
+    rotaryMechanismTopTime += 1;
+    
 }
 
 //--------------------------------------------------------------

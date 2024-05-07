@@ -4,7 +4,7 @@
 #include "ofxJoystick.h"
 #include "ofxSvg.h"
 #include "StringFormat.h"
-#define SAMPLERATE 60
+#define SAMPLERATE 30
 
 class ofApp : public ofBaseApp{
 
@@ -34,7 +34,7 @@ public:
     float rotaryMechanismBottomDegreeSpeed;
     
     float rotaryMechanismTopDegree;
-    float rotaryMechanismTopDegreeSpeed;
+    int rotaryMechanismTopTime;
     
     float DegToRad(float rad) {
         return PI * rad / 180.;
@@ -45,3 +45,17 @@ private:
     ofxSVG svg;
 
 };
+
+
+/*
+ メモ
+ image_0121でスタート→0
+
+ 0 ~ 4 36deg
+
+ 5 ~ 22 40deg
+ 
+ 23 ~ 41 36deg
+ 
+ 42 ~ 75 40->0
+*/
