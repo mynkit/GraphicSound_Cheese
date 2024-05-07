@@ -26,17 +26,31 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     
+    // 楕円03
     bool ellipse03Move;
     float ellipse03TranslateRate;
     float ellipse03TranslateRateDirection;
     float ellipse03TranslateRateSpeed;
     
+    // 回転機構_x5F_下
+    bool rotaryMechanismBottomMove;
     float rotaryMechanismBottomDegree;
     float rotaryMechanismBottomDegreeSpeed;
+    float rotaryMechanismBottomDegreeMaxSpeed;
+    float rotaryMechanismBottomDegreeAcceleration;
     
+    // 回転機構_x5F_上
     float rotaryMechanismTopDegree;
     int rotaryMechanismTopTime;
     int initRotaryMechanismTopTime;
+    
+    // カビ01~カビ06
+    ofVec2f moldPosition01;
+    ofVec2f moldPosition02;
+    ofVec2f moldPosition03;
+    ofVec2f moldPosition04;
+    ofVec2f moldPosition05;
+    ofVec2f moldPosition06;
     
     float DegToRad(float rad) {
         return PI * rad / 180.;

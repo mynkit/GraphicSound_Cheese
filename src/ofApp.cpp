@@ -7,19 +7,35 @@ void ofApp::setup(){
     ofEnableSmoothing();
     ofEnableArbTex();
     ofEnablePointSprites();
+    
+    // GamePadのセットアップ
     joy_.setup(GLFW_JOYSTICK_1);
     
+    // 楕円03
+    ellipse03Move = true;
     ellipse03TranslateRate = 0.;
     ellipse03TranslateRateDirection = true;
     ellipse03TranslateRateSpeed = 1. * (1. / SAMPLERATE);
     
-    ellipse03Move = true;
+    // 回転機構_x5F_下
+    rotaryMechanismBottomMove = false;
     rotaryMechanismBottomDegree = 270.;
     rotaryMechanismBottomDegreeSpeed = 0.;
+    rotaryMechanismBottomDegreeMaxSpeed = 50. * (30. / SAMPLERATE);
+    rotaryMechanismBottomDegreeAcceleration = 0.1 * (60. / SAMPLERATE);
     
+    // 回転機構_x5F_上
     rotaryMechanismTopDegree = 90.;
     initRotaryMechanismTopTime = 85 * (SAMPLERATE / 30);
     rotaryMechanismTopTime = initRotaryMechanismTopTime;
+    
+    // カビ01~カビ06
+    moldPosition01 = ofVec2f(243, 165);
+    moldPosition02 = ofVec2f(271, 165);
+    moldPosition03 = ofVec2f(0, 100);
+    moldPosition04 = ofVec2f(0, 100);
+    moldPosition05 = ofVec2f(0, 100);
+    moldPosition06 = ofVec2f(0, 100);
     
 }
 
@@ -76,10 +92,10 @@ void ofApp::update(){
         <line style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" x1="%f" y1="%f" x2="%f" y2="%f"/>
     </g>
     <g id="カビ01">
-        <circle cx="228.21" cy="89.93" r="12.85"/>
+        <circle cx="%f" cy="%f" r="12.85"/>
     </g>
     <g id="カビ02">
-        <circle cx="258.14" cy="89.93" r="12.85"/>
+        <circle cx="%f" cy="%f" r="12.85"/>
     </g>
     <g id="カビ03">
         <circle cx="288" cy="89.93" r="12.85"/>
@@ -105,7 +121,7 @@ void ofApp::update(){
             c0-1.06,0-3.09,0-3.09V66.42"/>
     </g>
     </svg>
-    )",int(ofGetWidth()*1.3), int(ofGetHeight()*1.3), ellipse03Translate, ellipse03Translate, rotaryMechanismBottomX1, rotaryMechanismBottomY1, rotaryMechanismBottomX2, rotaryMechanismBottomY1,rotaryMechanismBottomX1,rotaryMechanismBottomY2,rotaryMechanismBottomX2, rotaryMechanismBottomY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2);
+    )",int(ofGetWidth()*1.3), int(ofGetHeight()*1.3), ellipse03Translate, ellipse03Translate, rotaryMechanismBottomX1, rotaryMechanismBottomY1, rotaryMechanismBottomX2, rotaryMechanismBottomY1,rotaryMechanismBottomX1,rotaryMechanismBottomY2,rotaryMechanismBottomX2, rotaryMechanismBottomY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,moldPosition01.x,moldPosition01.y,moldPosition02.x,moldPosition02.y);
     
     svg.loadFromString(svgCode);
     updateParam();
@@ -146,6 +162,19 @@ void ofApp::updateParam(){
     }
     
     // 回転機構下
+    if (rotaryMechanismBottomMove) {
+        rotaryMechanismBottomDegreeSpeed += rotaryMechanismBottomDegreeAcceleration;
+    } else {
+        rotaryMechanismBottomDegreeSpeed -= rotaryMechanismBottomDegreeAcceleration*2.;
+    }
+    if (rotaryMechanismBottomDegreeSpeed > rotaryMechanismBottomDegreeMaxSpeed) {
+        // 回転速度の最大値指定
+        rotaryMechanismBottomDegreeSpeed = rotaryMechanismBottomDegreeMaxSpeed;
+    }
+    if (rotaryMechanismBottomDegreeSpeed < 0) {
+        // 回転速度の最小値指定
+        rotaryMechanismBottomDegreeSpeed = 0;
+    }
     rotaryMechanismBottomDegree += rotaryMechanismBottomDegreeSpeed;
     if (rotaryMechanismBottomDegree>=360) {rotaryMechanismBottomDegree-=360.;}
     
@@ -193,12 +222,19 @@ void ofApp::keyPressed(int key){
         case 'x':
             ellipse03Move = !ellipse03Move;
             break;
+        case 'y':
+            rotaryMechanismBottomMove = true;
+            break;
     }
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-
+    switch (key) {
+        case 'y':
+            rotaryMechanismBottomMove = false;
+            break;
+    }
 }
 
 //--------------------------------------------------------------
