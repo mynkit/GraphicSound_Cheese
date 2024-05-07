@@ -37,7 +37,8 @@ public:
     float rotaryMechanismBottomDegree;
     float rotaryMechanismBottomDegreeSpeed;
     float rotaryMechanismBottomDegreeMaxSpeed;
-    float rotaryMechanismBottomDegreeAcceleration;
+    float rotaryMechanismBottomDegreeAccelerationAdd;
+    float rotaryMechanismBottomDegreeAccelerationMulti;
     
     // 回転機構_x5F_上
     float rotaryMechanismTopDegree;

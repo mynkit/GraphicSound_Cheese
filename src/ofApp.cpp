@@ -22,7 +22,8 @@ void ofApp::setup(){
     rotaryMechanismBottomDegree = 270.;
     rotaryMechanismBottomDegreeSpeed = 0.;
     rotaryMechanismBottomDegreeMaxSpeed = 50. * (30. / SAMPLERATE);
-    rotaryMechanismBottomDegreeAcceleration = 0.1 * (60. / SAMPLERATE);
+    rotaryMechanismBottomDegreeAccelerationAdd = 0.05 * (60. / SAMPLERATE);
+    rotaryMechanismBottomDegreeAccelerationMulti = pow(1.01, SAMPLERATE / 60.);
     
     // 回転機構_x5F_上
     rotaryMechanismTopDegree = 90.;
@@ -163,9 +164,11 @@ void ofApp::updateParam(){
     
     // 回転機構下
     if (rotaryMechanismBottomMove) {
-        rotaryMechanismBottomDegreeSpeed += rotaryMechanismBottomDegreeAcceleration;
+        rotaryMechanismBottomDegreeSpeed += rotaryMechanismBottomDegreeAccelerationAdd;
+        rotaryMechanismBottomDegreeSpeed *= rotaryMechanismBottomDegreeAccelerationMulti;
     } else {
-        rotaryMechanismBottomDegreeSpeed -= rotaryMechanismBottomDegreeAcceleration*2.;
+        rotaryMechanismBottomDegreeSpeed -= rotaryMechanismBottomDegreeAccelerationAdd;
+        rotaryMechanismBottomDegreeSpeed /= rotaryMechanismBottomDegreeAccelerationMulti;
     }
     if (rotaryMechanismBottomDegreeSpeed > rotaryMechanismBottomDegreeMaxSpeed) {
         // 回転速度の最大値指定
