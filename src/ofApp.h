@@ -4,7 +4,7 @@
 #include "ofxJoystick.h"
 #include "ofxSvg.h"
 #include "StringFormat.h"
-#define SAMPLERATE 60
+#define SAMPLERATE 30
 
 class ofApp : public ofBaseApp{
 
@@ -75,6 +75,8 @@ public:
     int mold07Duration;
     int mold08Duration;
     int mold09Duration;
+    float mold01SinkDepth;
+    float mold01SinkY;
     
     float DegToRad(float rad) {
         return PI * rad / 180.;
