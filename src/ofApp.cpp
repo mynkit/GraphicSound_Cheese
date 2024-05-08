@@ -27,16 +27,39 @@ void ofApp::setup(){
     
     // 回転機構_x5F_上
     rotaryMechanismTopDegree = 90.;
-    initRotaryMechanismTopTime = 85 * (SAMPLERATE / 30);
+    initRotaryMechanismTopTime = 80 * (SAMPLERATE / 30);
     rotaryMechanismTopTime = initRotaryMechanismTopTime;
     
     // カビ01~カビ06
-    moldPosition01 = ofVec2f(243, 165);
-    moldPosition02 = ofVec2f(271, 165);
-    moldPosition03 = ofVec2f(0, 100);
-    moldPosition04 = ofVec2f(0, 100);
-    moldPosition05 = ofVec2f(0, 100);
-    moldPosition06 = ofVec2f(0, 100);
+    mold01Position = ofVec2f(243, 140);
+    mold02Position = ofVec2f(271, 137);
+    mold03Position = ofVec2f(0, 100);
+    mold04Position = ofVec2f(0, 100);
+    mold05Position = ofVec2f(0, 100);
+    mold06Position = ofVec2f(0, 100);
+    mold07Position = ofVec2f(0, 100);
+    mold08Position = ofVec2f(0, 100);
+    mold09Position = ofVec2f(0, 100);
+    
+    mold01Time = 0;
+    mold02Time = 0;
+    mold03Time = 0;
+    mold04Time = 0;
+    mold05Time = 0;
+    mold06Time = 0;
+    mold07Time = 0;
+    mold08Time = 0;
+    mold09Time = 0;
+    
+    mold01Duration = 131 * (SAMPLERATE / 30); // バウンドして回転機構にぶつかって沈む
+    mold02Duration = 48 * (SAMPLERATE / 30); // バウンドしてそのまま消える
+    mold03Duration = 42 * (SAMPLERATE / 30); // 03と04は重なってるやつ
+    mold04Duration = 46 * (SAMPLERATE / 30);
+    mold05Duration = 66 * (SAMPLERATE / 30); // 05はそのまま下に落ちる
+    mold06Duration = 95 * (SAMPLERATE / 30); // 落ちてきてそのまま沈む
+    mold07Duration = 88 * (SAMPLERATE / 30); // 左端で落ちてきてそのまま沈む
+    mold08Duration = 42 * (SAMPLERATE / 30); // 回転機構に叩かれるやつ
+    mold09Duration = 87 * (SAMPLERATE / 30); // 最後のやつ
     
 }
 
@@ -110,6 +133,15 @@ void ofApp::update(){
     <g id="カビ06">
         <circle cx="288" cy="119.37" r="12.85"/>
     </g>
+    <g id="カビ07">
+        <circle cx="288" cy="119.37" r="12.85"/>
+    </g>
+    <g id="カビ08">
+        <circle cx="288" cy="119.37" r="12.85"/>
+    </g>
+    <g id="カビ09">
+        <circle cx="288" cy="119.37" r="12.85"/>
+    </g>
     <g id="煙突">
         <circle style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="-1338.75" cy="445.9" r="59.95"/>
         <circle style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="-1284.84" cy="391.99" r="59.95"/>
@@ -122,10 +154,10 @@ void ofApp::update(){
             c0-1.06,0-3.09,0-3.09V66.42"/>
     </g>
     </svg>
-    )",int(ofGetWidth()*1.3), int(ofGetHeight()*1.3), ellipse03Translate, ellipse03Translate, rotaryMechanismBottomX1, rotaryMechanismBottomY1, rotaryMechanismBottomX2, rotaryMechanismBottomY1,rotaryMechanismBottomX1,rotaryMechanismBottomY2,rotaryMechanismBottomX2, rotaryMechanismBottomY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,moldPosition01.x,moldPosition01.y,moldPosition02.x,moldPosition02.y);
+    )",int(ofGetWidth()*1.3), int(ofGetHeight()*1.3), ellipse03Translate, ellipse03Translate, rotaryMechanismBottomX1, rotaryMechanismBottomY1, rotaryMechanismBottomX2, rotaryMechanismBottomY1,rotaryMechanismBottomX1,rotaryMechanismBottomY2,rotaryMechanismBottomX2, rotaryMechanismBottomY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,mold01Position.x,mold01Position.y,mold02Position.x,mold02Position.y);
     
     svg.loadFromString(svgCode);
-    updateParam();
+    if (!updateParamStop) updateParam();
     
     // chack all button for push
     for (int i = 0; i < joy_.getButtonNum(); i++) {
@@ -204,6 +236,37 @@ void ofApp::updateParam(){
         rotaryMechanismTopTime += 1;
     }
     
+    // カビ01
+    if (mold01Time <= 16 * (SAMPLERATE / 30)) {
+        mold01Position.x = 243;
+        mold01Position.y = ofMap(mold01Time, 0, 16 * (SAMPLERATE / 30), 140, 335);
+    } else if (mold01Time <= 33 * (SAMPLERATE / 30)) {
+        mold01Position.x = ofMap(mold01Time, 16 * (SAMPLERATE / 30), 33 * (SAMPLERATE / 30), 243, 422);
+        mold01Position.y = 0.0018*pow(mold01Position.x - 440, 2) - 0.0018*pow(243 - 440, 2) + 335;
+        if (rotaryMechanismTopTime >= initRotaryMechanismTopTime && mold01Time == 33 * (SAMPLERATE / 30)) {
+            rotaryMechanismTopTime = 0;
+        }
+    } else if (mold01Time <= 63 * (SAMPLERATE / 30)) {
+        mold01Position.x = ofMap(mold01Time, 33 * (SAMPLERATE / 30), 63 * (SAMPLERATE / 30), 422, 232);
+        mold01Position.y = 0.0052*pow(mold01Position.x - 367, 2) - 0.0052*pow(422 - 367, 2) + 0.0018*pow(422 - 440, 2) - 0.0018*pow(243 - 440, 2) + 335;
+    }
+    // カビ02
+    if (mold02Time <= 16 * (SAMPLERATE / 30)) {
+        mold02Position.x = 271;
+        mold02Position.y = ofMap(mold02Time, 0, 16 * (SAMPLERATE / 30), 137, 360);
+    } else if (mold02Time <= 48 * (SAMPLERATE / 30)) {
+        mold02Position.x = ofMap(mold02Time, 16 * (SAMPLERATE / 30), 47 * (SAMPLERATE / 30), 271, 559);
+        mold02Position.y = 0.0022*pow(mold02Position.x - 438, 2) - 0.0022*pow(271 - 438, 2) + 360;
+    }
+    
+    
+    if (mold01Time <= mold01Duration) {
+        mold01Time += 1;
+    }
+    if (mold02Time <= mold02Duration) {
+        mold02Time += 1;
+    }
+    
 }
 
 //--------------------------------------------------------------
@@ -227,6 +290,20 @@ void ofApp::keyPressed(int key){
             break;
         case 'y':
             rotaryMechanismBottomMove = true;
+            break;
+        case ' ':
+            updateParamStop = !updateParamStop;
+            break;
+        case '0':
+            mold01Time = 0;
+            mold02Time = 0;
+            mold03Time = 0;
+            mold04Time = 0;
+            mold05Time = 0;
+            mold06Time = 0;
+            mold07Time = 0;
+            mold08Time = 0;
+            mold09Time = 0;
             break;
     }
 }
