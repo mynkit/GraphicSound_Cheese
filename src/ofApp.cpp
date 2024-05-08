@@ -138,7 +138,8 @@ void ofApp::update(){
         <circle cx="%f" cy="%f" r="12.85"/>
     </g>
     <g id="カビ09">
-        <circle cx="288" cy="119.37" r="12.85"/>
+        <circle cx="%f" cy="%f" r="12.85"/>
+        <rect x="%f" y="%f" width="25.7" height="%f" style="fill:#ffffff"/>
     </g>
     <g id="楕円03">
         <ellipse style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="255.94" cy="258.74" rx="91.61" ry="25.9" transform="translate(%f, %f) "/>
@@ -161,7 +162,7 @@ void ofApp::update(){
             c0-1.06,0-3.09,0-3.09V66.42"/>
     </g>
     </svg>
-    )",int(ofGetWidth()*1.3), int(ofGetHeight()*1.3), rotaryMechanismBottomX1, rotaryMechanismBottomY1, rotaryMechanismBottomX2, rotaryMechanismBottomY1,rotaryMechanismBottomX1,rotaryMechanismBottomY2,rotaryMechanismBottomX2, rotaryMechanismBottomY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,mold01Position.x,mold01Position.y,mold01Position.x-12.85,mold01SinkY+12.85,mold01SinkDepth,mold02Position.x,mold02Position.y,mold03Position.x,mold03Position.y,mold04Position.x,mold04Position.y,mold05Position.x,mold05Position.y,mold06Position.x,mold06Position.y,mold06Position.x-12.85,mold06SinkY+12.85,mold06SinkDepth,mold07Position.x,mold07Position.y,mold07Position.x-12.85,mold07SinkY+12.85,mold07SinkDepth,mold08Position.x,mold08Position.y, ellipse03Translate, ellipse03Translate);
+    )",int(ofGetWidth()*1.3), int(ofGetHeight()*1.3), rotaryMechanismBottomX1, rotaryMechanismBottomY1, rotaryMechanismBottomX2, rotaryMechanismBottomY1,rotaryMechanismBottomX1,rotaryMechanismBottomY2,rotaryMechanismBottomX2, rotaryMechanismBottomY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,mold01Position.x,mold01Position.y,mold01Position.x-12.85,mold01SinkY+12.85,mold01SinkDepth,mold02Position.x,mold02Position.y,mold03Position.x,mold03Position.y,mold04Position.x,mold04Position.y,mold05Position.x,mold05Position.y,mold06Position.x,mold06Position.y,mold06Position.x-12.85,mold06SinkY+12.85,mold06SinkDepth,mold07Position.x,mold07Position.y,mold07Position.x-12.85,mold07SinkY+12.85,mold07SinkDepth,mold08Position.x,mold08Position.y,mold09Position.x,mold09Position.y,mold09Position.x-12.85,mold09SinkY+12.85,mold09SinkDepth, ellipse03Translate, ellipse03Translate);
     
     svg.loadFromString(svgCode);
     if (!updateParamStop) updateParam();
@@ -345,6 +346,21 @@ void ofApp::updateParam(){
     } else if (mold08Time <= mold08Duration) {
         mold08Position.x = ofMap(mold08Time, 29 * (SAMPLERATE / 30), mold08Duration, 405, 600);
         mold08Position.y = 0.007*pow(mold08Position.x - 400, 2) - 0.007*pow(405 - 400, 2) + 0.0015*pow(405 - 450, 2) - 0.0015*pow(246 - 450, 2) + 284;
+    }
+    
+    // カビ09
+    if (mold09Time >= 21 * (SAMPLERATE / 30)) {
+        mold09SinkDepth = 25.7;
+        mold09SinkY = 318;
+    } else {
+        mold09SinkDepth = 0.;
+    }
+    
+    if (mold09Time <= 21 * (SAMPLERATE / 30)) {
+        mold09Position.x = 274;
+        mold09Position.y = ofMap(mold09Time, 0, 21 * (SAMPLERATE / 30), 139, 320);
+    } else if (mold09Time <= mold09Duration) {
+        mold09Position.y = ofMap(mold09Time, 21 * (SAMPLERATE / 30), mold09Duration, 320, 343.7);
     }
     
     // 時刻更新
