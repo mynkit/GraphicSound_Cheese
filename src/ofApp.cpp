@@ -43,17 +43,17 @@ void ofApp::setup(){
     
     mold01Time = 0;
     mold02Time = 0;
-    mold03Time = 0;
-    mold04Time = 0;
-    mold05Time = 0;
-    mold06Time = 0;
-    mold07Time = 0;
-    mold08Time = 0;
-    mold09Time = 0;
+    mold03Time = -12;
+    mold04Time = -12;
+    mold05Time = -12;
+    mold06Time = -18;
+    mold07Time = -45;
+    mold08Time = -53;
+    mold09Time = -69;
     
     mold01Duration = 131 * (SAMPLERATE / 30); // バウンドして回転機構にぶつかって沈む
     mold02Duration = 48 * (SAMPLERATE / 30); // バウンドしてそのまま消える
-    mold03Duration = 42 * (SAMPLERATE / 30); // 03と04は重なってるやつ
+    mold03Duration = 46 * (SAMPLERATE / 30); // 03と04は重なってるやつ
     mold04Duration = 46 * (SAMPLERATE / 30);
     mold05Duration = 66 * (SAMPLERATE / 30); // 05はそのまま下に落ちる
     mold06Duration = 95 * (SAMPLERATE / 30); // 落ちてきてそのまま沈む
@@ -125,10 +125,10 @@ void ofApp::update(){
         <circle cx="%f" cy="%f" r="12.85"/>
     </g>
     <g id="カビ03">
-        <circle cx="288" cy="89.93" r="12.85"/>
+        <circle cx="%f" cy="%f" r="12.85"/>
     </g>
     <g id="カビ04">
-        <circle cx="228.21" cy="119.37" r="12.85"/>
+        <circle cx="%f" cy="%f" r="12.85"/>
     </g>
     <g id="カビ05">
         <circle cx="258.14" cy="119.37" r="12.85"/>
@@ -157,7 +157,7 @@ void ofApp::update(){
             c0-1.06,0-3.09,0-3.09V66.42"/>
     </g>
     </svg>
-    )",int(ofGetWidth()*1.3), int(ofGetHeight()*1.3), ellipse03Translate, ellipse03Translate, rotaryMechanismBottomX1, rotaryMechanismBottomY1, rotaryMechanismBottomX2, rotaryMechanismBottomY1,rotaryMechanismBottomX1,rotaryMechanismBottomY2,rotaryMechanismBottomX2, rotaryMechanismBottomY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,mold01Position.x,mold01Position.y,mold01Position.x-12.85,mold01SinkY+12.85,mold01SinkDepth,mold02Position.x,mold02Position.y);
+    )",int(ofGetWidth()*1.3), int(ofGetHeight()*1.3), ellipse03Translate, ellipse03Translate, rotaryMechanismBottomX1, rotaryMechanismBottomY1, rotaryMechanismBottomX2, rotaryMechanismBottomY1,rotaryMechanismBottomX1,rotaryMechanismBottomY2,rotaryMechanismBottomX2, rotaryMechanismBottomY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,mold01Position.x,mold01Position.y,mold01Position.x-12.85,mold01SinkY+12.85,mold01SinkDepth,mold02Position.x,mold02Position.y,mold03Position.x,mold03Position.y,mold04Position.x,mold04Position.y);
     
     svg.loadFromString(svgCode);
     if (!updateParamStop) updateParam();
@@ -275,12 +275,51 @@ void ofApp::updateParam(){
         mold02Position.y = 0.0022*pow(mold02Position.x - 438, 2) - 0.0022*pow(271 - 438, 2) + 360;
     }
     
+    // カビ03
+    if (mold03Time <= 14 * (SAMPLERATE / 30)) {
+        mold03Position.x = 225;
+        mold03Position.y = ofMap(mold03Time, 0, 14 * (SAMPLERATE / 30), 140, 362);
+    } else if (mold03Time <= mold03Duration) {
+        mold03Position.x = ofMap(mold03Time, 14 * (SAMPLERATE / 30), mold03Duration, 225, 569);
+        mold03Position.y = 0.0035*pow(mold03Position.x - 290, 2) - 0.0035*pow(225 - 290, 2) + 362;
+    }
     
+    // カビ04
+    if (mold04Time <= 14 * (SAMPLERATE / 30)) {
+        mold04Position.x = 225;
+        mold04Position.y = ofMap(mold04Time, 0, 14 * (SAMPLERATE / 30), 140, 362);
+    } else if (mold04Time <= mold04Duration) {
+        mold04Position.x = ofMap(mold04Time, 14 * (SAMPLERATE / 30), mold04Duration, 225, 575);
+        mold04Position.y = 0.002*pow(mold04Position.x - 360, 2) - 0.002*pow(225 - 360, 2) + 362;
+    }
+    
+    // 時刻更新
     if (mold01Time <= mold01Duration) {
         mold01Time += 1;
     }
     if (mold02Time <= mold02Duration) {
         mold02Time += 1;
+    }
+    if (mold03Time <= mold03Duration) {
+        mold03Time += 1;
+    }
+    if (mold04Time <= mold04Duration) {
+        mold04Time += 1;
+    }
+    if (mold05Time <= mold05Duration) {
+        mold05Time += 1;
+    }
+    if (mold06Time <= mold06Duration) {
+        mold06Time += 1;
+    }
+    if (mold07Time <= mold07Duration) {
+        mold07Time += 1;
+    }
+    if (mold08Time <= mold08Duration) {
+        mold08Time += 1;
+    }
+    if (mold09Time <= mold09Duration) {
+        mold09Time += 1;
     }
     
 }
@@ -313,13 +352,13 @@ void ofApp::keyPressed(int key){
         case '0':
             mold01Time = 0;
             mold02Time = 0;
-            mold03Time = 0;
-            mold04Time = 0;
-            mold05Time = 0;
-            mold06Time = 0;
-            mold07Time = 0;
-            mold08Time = 0;
-            mold09Time = 0;
+            mold03Time = -12;
+            mold04Time = -12;
+            mold05Time = -12;
+            mold06Time = -18;
+            mold07Time = -45;
+            mold08Time = -53;
+            mold09Time = -69;
             break;
     }
 }
