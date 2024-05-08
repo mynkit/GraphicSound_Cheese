@@ -79,6 +79,8 @@ public:
     float mold01SinkY;
     float mold06SinkDepth;
     float mold06SinkY;
+    float mold07SinkDepth;
+    float mold07SinkY;
     
     float DegToRad(float rad) {
         return PI * rad / 180.;

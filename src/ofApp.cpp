@@ -63,7 +63,7 @@ void ofApp::setup(){
     
     mold01SinkDepth = 0.;
     mold06SinkDepth = 0.;
-    
+    mold07SinkDepth = 0.;
 }
 
 //--------------------------------------------------------------
@@ -90,15 +90,6 @@ void ofApp::update(){
             <polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" points="75.93,255.12 75.93,546.66 349.43,546.66         "/>
             <polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" points="75.93,255.12 165.86,165.19 439.37,456.72 349.43,546.66         "/>
         </g>
-    </g>
-    <g id="楕円03">
-        <ellipse style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="255.94" cy="258.74" rx="91.61" ry="25.9" transform="translate(%f, %f) "/>
-    </g>
-    <g id="楕円02">
-        <ellipse style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="255.94" cy="238.49" rx="91.61" ry="25.9"/>
-    </g>
-    <g id="楕円01">
-        <ellipse style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="255.94" cy="220" rx="91.61" ry="25.9" />
     </g>
     <g id="車輪左">
         <circle style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="153.03" cy="470.93" r="45.44"/>
@@ -139,13 +130,23 @@ void ofApp::update(){
         <rect x="%f" y="%f" width="25.7" height="%f" style="fill:#ffffff"/>
     </g>
     <g id="カビ07">
-        <circle cx="288" cy="119.37" r="12.85"/>
+        <circle cx="%f" cy="%f" r="12.85"/>
+        <rect x="%f" y="%f" width="25.7" height="%f" style="fill:#ffffff"/>
     </g>
     <g id="カビ08">
         <circle cx="288" cy="119.37" r="12.85"/>
     </g>
     <g id="カビ09">
         <circle cx="288" cy="119.37" r="12.85"/>
+    </g>
+    <g id="楕円03">
+        <ellipse style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="255.94" cy="258.74" rx="91.61" ry="25.9" transform="translate(%f, %f) "/>
+    </g>
+    <g id="楕円02">
+        <ellipse style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="255.94" cy="238.49" rx="91.61" ry="25.9"/>
+    </g>
+    <g id="楕円01">
+        <ellipse style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="255.94" cy="220" rx="91.61" ry="25.9" />
     </g>
     <g id="煙突">
         <circle style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="-1338.75" cy="445.9" r="59.95"/>
@@ -159,7 +160,7 @@ void ofApp::update(){
             c0-1.06,0-3.09,0-3.09V66.42"/>
     </g>
     </svg>
-    )",int(ofGetWidth()*1.3), int(ofGetHeight()*1.3), ellipse03Translate, ellipse03Translate, rotaryMechanismBottomX1, rotaryMechanismBottomY1, rotaryMechanismBottomX2, rotaryMechanismBottomY1,rotaryMechanismBottomX1,rotaryMechanismBottomY2,rotaryMechanismBottomX2, rotaryMechanismBottomY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,mold01Position.x,mold01Position.y,mold01Position.x-12.85,mold01SinkY+12.85,mold01SinkDepth,mold02Position.x,mold02Position.y,mold03Position.x,mold03Position.y,mold04Position.x,mold04Position.y,mold05Position.x,mold05Position.y,mold06Position.x,mold06Position.y,mold06Position.x-12.85,mold06SinkY+12.85,mold06SinkDepth);
+    )",int(ofGetWidth()*1.3), int(ofGetHeight()*1.3), rotaryMechanismBottomX1, rotaryMechanismBottomY1, rotaryMechanismBottomX2, rotaryMechanismBottomY1,rotaryMechanismBottomX1,rotaryMechanismBottomY2,rotaryMechanismBottomX2, rotaryMechanismBottomY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,mold01Position.x,mold01Position.y,mold01Position.x-12.85,mold01SinkY+12.85,mold01SinkDepth,mold02Position.x,mold02Position.y,mold03Position.x,mold03Position.y,mold04Position.x,mold04Position.y,mold05Position.x,mold05Position.y,mold06Position.x,mold06Position.y,mold06Position.x-12.85,mold06SinkY+12.85,mold06SinkDepth,mold07Position.x,mold07Position.y,mold07Position.x-12.85,mold07SinkY+12.85,mold07SinkDepth, ellipse03Translate, ellipse03Translate);
     
     svg.loadFromString(svgCode);
     if (!updateParamStop) updateParam();
@@ -316,6 +317,21 @@ void ofApp::updateParam(){
         mold06Position.y = 374;
     } else if (mold06Time <= mold06Duration) {
         mold06Position.y = ofMap(mold06Time, 29 * (SAMPLERATE / 30), mold06Duration, mold06SinkY, mold06SinkY + 25.7);
+    }
+    
+    // カビ07
+    if (mold07Time >= 19 * (SAMPLERATE / 30)) {
+        mold07SinkDepth = 25.7;
+        mold07SinkY = 290;
+    } else {
+        mold07SinkDepth = 0.;
+    }
+    
+    if (mold07Time <= 19 * (SAMPLERATE / 30)) {
+        mold07Position.x = 218;
+        mold07Position.y = ofMap(mold07Time, 0, 18 * (SAMPLERATE / 30), 137, 282);
+    } else if (mold07Time <= mold07Duration) {
+        mold07Position.y = ofMap(mold07Time, 19 * (SAMPLERATE / 30), mold07Duration, mold07SinkY, mold07SinkY + 25.7);
     }
     
     // 時刻更新
