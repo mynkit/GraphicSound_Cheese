@@ -64,6 +64,7 @@ void ofApp::setup(){
     mold01SinkDepth = 0.;
     mold06SinkDepth = 0.;
     mold07SinkDepth = 0.;
+    mold09SinkDepth = 0.;
 }
 
 //--------------------------------------------------------------
@@ -134,7 +135,7 @@ void ofApp::update(){
         <rect x="%f" y="%f" width="25.7" height="%f" style="fill:#ffffff"/>
     </g>
     <g id="カビ08">
-        <circle cx="288" cy="119.37" r="12.85"/>
+        <circle cx="%f" cy="%f" r="12.85"/>
     </g>
     <g id="カビ09">
         <circle cx="288" cy="119.37" r="12.85"/>
@@ -160,7 +161,7 @@ void ofApp::update(){
             c0-1.06,0-3.09,0-3.09V66.42"/>
     </g>
     </svg>
-    )",int(ofGetWidth()*1.3), int(ofGetHeight()*1.3), rotaryMechanismBottomX1, rotaryMechanismBottomY1, rotaryMechanismBottomX2, rotaryMechanismBottomY1,rotaryMechanismBottomX1,rotaryMechanismBottomY2,rotaryMechanismBottomX2, rotaryMechanismBottomY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,mold01Position.x,mold01Position.y,mold01Position.x-12.85,mold01SinkY+12.85,mold01SinkDepth,mold02Position.x,mold02Position.y,mold03Position.x,mold03Position.y,mold04Position.x,mold04Position.y,mold05Position.x,mold05Position.y,mold06Position.x,mold06Position.y,mold06Position.x-12.85,mold06SinkY+12.85,mold06SinkDepth,mold07Position.x,mold07Position.y,mold07Position.x-12.85,mold07SinkY+12.85,mold07SinkDepth, ellipse03Translate, ellipse03Translate);
+    )",int(ofGetWidth()*1.3), int(ofGetHeight()*1.3), rotaryMechanismBottomX1, rotaryMechanismBottomY1, rotaryMechanismBottomX2, rotaryMechanismBottomY1,rotaryMechanismBottomX1,rotaryMechanismBottomY2,rotaryMechanismBottomX2, rotaryMechanismBottomY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,mold01Position.x,mold01Position.y,mold01Position.x-12.85,mold01SinkY+12.85,mold01SinkDepth,mold02Position.x,mold02Position.y,mold03Position.x,mold03Position.y,mold04Position.x,mold04Position.y,mold05Position.x,mold05Position.y,mold06Position.x,mold06Position.y,mold06Position.x-12.85,mold06SinkY+12.85,mold06SinkDepth,mold07Position.x,mold07Position.y,mold07Position.x-12.85,mold07SinkY+12.85,mold07SinkDepth,mold08Position.x,mold08Position.y, ellipse03Translate, ellipse03Translate);
     
     svg.loadFromString(svgCode);
     if (!updateParamStop) updateParam();
@@ -220,6 +221,10 @@ void ofApp::updateParam(){
     if (rotaryMechanismBottomDegree>=360) {rotaryMechanismBottomDegree-=360.;}
     
     // 回転機構上
+    if (rotaryMechanismTopTime <= initRotaryMechanismTopTime) {
+        rotaryMechanismTopTime += 1;
+    }
+    
     if (rotaryMechanismTopTime <= 5 * (SAMPLERATE / 30)) {
         rotaryMechanismTopDegree = ofMap(rotaryMechanismTopTime, 0, 5 * (SAMPLERATE / 30), 90, -90);
     } else if (rotaryMechanismTopTime <= 23 * (SAMPLERATE / 30)) {
@@ -231,15 +236,11 @@ void ofApp::updateParam(){
         rotaryMechanismTopDegree = ofMap(pow(seed,0.95), 0., 1., -90, -90-350);
     } else if (rotaryMechanismTopTime <= 56 * (SAMPLERATE / 30)) {
         float seed = ofMap(rotaryMechanismTopTime, 45 * (SAMPLERATE / 30), 56 * (SAMPLERATE / 30), 0., 1.);
-        rotaryMechanismTopDegree = ofMap(pow(seed,0.9), 0., 1., -80, -90-180);
+        rotaryMechanismTopDegree = ofMap(pow(seed,0.75), 0., 1., -80, -90-180);
     } else if (rotaryMechanismTopTime <= 80 * (SAMPLERATE / 30)) {
         rotaryMechanismTopDegree = 90 - 30 * sin((PI/(8. * (SAMPLERATE / 30.))) * (rotaryMechanismTopTime-(56. * (SAMPLERATE / 30))));
     } else {
         rotaryMechanismTopDegree = 90;
-    }
-    
-    if (rotaryMechanismTopTime <= initRotaryMechanismTopTime) {
-        rotaryMechanismTopTime += 1;
     }
     
     // カビ01
@@ -322,16 +323,28 @@ void ofApp::updateParam(){
     // カビ07
     if (mold07Time >= 19 * (SAMPLERATE / 30)) {
         mold07SinkDepth = 25.7;
-        mold07SinkY = 290;
+        mold07SinkY = 292;
     } else {
         mold07SinkDepth = 0.;
     }
     
     if (mold07Time <= 19 * (SAMPLERATE / 30)) {
         mold07Position.x = 218;
-        mold07Position.y = ofMap(mold07Time, 0, 18 * (SAMPLERATE / 30), 137, 282);
+        mold07Position.y = ofMap(mold07Time, 0, 18 * (SAMPLERATE / 30), 137, 284);
     } else if (mold07Time <= mold07Duration) {
         mold07Position.y = ofMap(mold07Time, 19 * (SAMPLERATE / 30), mold07Duration, mold07SinkY, mold07SinkY + 25.7);
+    }
+    
+    // カビ08
+    if (mold08Time <= 12 * (SAMPLERATE / 30)) {
+        mold08Position.x = 246;
+        mold08Position.y = ofMap(mold08Time, 0, 12 * (SAMPLERATE / 30), 140, 284);
+    } else if (mold08Time <= 29 * (SAMPLERATE / 30)) {
+        mold08Position.x = ofMap(mold08Time, 12 * (SAMPLERATE / 30), 29 * (SAMPLERATE / 30), 246, 405);
+        mold08Position.y = 0.0015*pow(mold08Position.x - 450, 2) - 0.0015*pow(246 - 450, 2) + 284;
+    } else if (mold08Time <= mold08Duration) {
+        mold08Position.x = ofMap(mold08Time, 29 * (SAMPLERATE / 30), mold08Duration, 405, 600);
+        mold08Position.y = 0.007*pow(mold08Position.x - 400, 2) - 0.007*pow(405 - 400, 2) + 0.0015*pow(405 - 450, 2) - 0.0015*pow(246 - 450, 2) + 284;
     }
     
     // 時刻更新
