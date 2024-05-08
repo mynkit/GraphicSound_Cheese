@@ -131,7 +131,7 @@ void ofApp::update(){
         <circle cx="%f" cy="%f" r="12.85"/>
     </g>
     <g id="カビ05">
-        <circle cx="258.14" cy="119.37" r="12.85"/>
+        <circle cx="%f" cy="%f" r="12.85"/>
     </g>
     <g id="カビ06">
         <circle cx="288" cy="119.37" r="12.85"/>
@@ -157,7 +157,7 @@ void ofApp::update(){
             c0-1.06,0-3.09,0-3.09V66.42"/>
     </g>
     </svg>
-    )",int(ofGetWidth()*1.3), int(ofGetHeight()*1.3), ellipse03Translate, ellipse03Translate, rotaryMechanismBottomX1, rotaryMechanismBottomY1, rotaryMechanismBottomX2, rotaryMechanismBottomY1,rotaryMechanismBottomX1,rotaryMechanismBottomY2,rotaryMechanismBottomX2, rotaryMechanismBottomY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,mold01Position.x,mold01Position.y,mold01Position.x-12.85,mold01SinkY+12.85,mold01SinkDepth,mold02Position.x,mold02Position.y,mold03Position.x,mold03Position.y,mold04Position.x,mold04Position.y);
+    )",int(ofGetWidth()*1.3), int(ofGetHeight()*1.3), ellipse03Translate, ellipse03Translate, rotaryMechanismBottomX1, rotaryMechanismBottomY1, rotaryMechanismBottomX2, rotaryMechanismBottomY1,rotaryMechanismBottomX1,rotaryMechanismBottomY2,rotaryMechanismBottomX2, rotaryMechanismBottomY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,mold01Position.x,mold01Position.y,mold01Position.x-12.85,mold01SinkY+12.85,mold01SinkDepth,mold02Position.x,mold02Position.y,mold03Position.x,mold03Position.y,mold04Position.x,mold04Position.y,mold05Position.x,mold05Position.y);
     
     svg.loadFromString(svgCode);
     if (!updateParamStop) updateParam();
@@ -291,6 +291,12 @@ void ofApp::updateParam(){
     } else if (mold04Time <= mold04Duration) {
         mold04Position.x = ofMap(mold04Time, 14 * (SAMPLERATE / 30), mold04Duration, 225, 575);
         mold04Position.y = 0.002*pow(mold04Position.x - 360, 2) - 0.002*pow(225 - 360, 2) + 362;
+    }
+    
+    // カビ05
+    if (mold05Time <= mold05Duration) {
+        mold05Position.x = 247;
+        mold05Position.y = ofMap(mold05Time, 0, mold05Duration, 138, 595);
     }
     
     // 時刻更新
