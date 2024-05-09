@@ -415,7 +415,7 @@ void ofApp::initMold(){
     if(mold05Time >= mold05Duration) mold05Time = -12;
     if(mold06Time >= mold06Duration) mold06Time = -18;
     if(mold07Time >= mold07Duration) mold07Time = -45;
-    if(mold08Time >= mold08Duration) mold08Time = -53;
+    if(mold08Time >= mold08Duration && rotaryMechanismTopTime == initRotaryMechanismTopTime + 1) mold08Time = -53;
     if(mold09Time >= mold09Duration) mold09Time = -69;
 }
 
