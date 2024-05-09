@@ -13,6 +13,7 @@ public:
     void update();
     void updateParam();
     void draw();
+    void initMold();
 
     void keyPressed(int key);
     void keyReleased(int key);

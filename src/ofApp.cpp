@@ -41,16 +41,6 @@ void ofApp::setup(){
     mold08Position = ofVec2f(0, 100);
     mold09Position = ofVec2f(0, 100);
     
-    mold01Time = 0;
-    mold02Time = 0;
-    mold03Time = -12;
-    mold04Time = -12;
-    mold05Time = -12;
-    mold06Time = -18;
-    mold07Time = -45;
-    mold08Time = -53;
-    mold09Time = -69;
-    
     mold01Duration = 131 * (SAMPLERATE / 30); // バウンドして回転機構にぶつかって沈む
     mold02Duration = 48 * (SAMPLERATE / 30); // バウンドしてそのまま消える
     mold03Duration = 46 * (SAMPLERATE / 30); // 03と04は重なってるやつ
@@ -60,6 +50,16 @@ void ofApp::setup(){
     mold07Duration = 88 * (SAMPLERATE / 30); // 左端で落ちてきてそのまま沈む
     mold08Duration = 42 * (SAMPLERATE / 30); // 回転機構に叩かれるやつ
     mold09Duration = 87 * (SAMPLERATE / 30); // 最後のやつ
+    
+    mold01Time = mold01Duration + 1;
+    mold02Time = mold02Duration + 1;
+    mold03Time = mold03Duration + 1;
+    mold04Time = mold04Duration + 1;
+    mold05Time = mold05Duration + 1;
+    mold06Time = mold06Duration + 1;
+    mold07Time = mold07Duration + 1;
+    mold08Time = mold08Duration + 1;
+    mold09Time = mold09Duration + 1;
     
     mold01SinkDepth = 0.;
     mold06SinkDepth = 0.;
@@ -220,6 +220,11 @@ void ofApp::updateParam(){
     }
     rotaryMechanismBottomDegree += rotaryMechanismBottomDegreeSpeed;
     if (rotaryMechanismBottomDegree>=360) {rotaryMechanismBottomDegree-=360.;}
+    
+    // 回転機構下によって球が出される
+    if (rotaryMechanismBottomDegreeSpeed >= 14.2 && rotaryMechanismBottomMove) {
+        initMold();
+    }
     
     // 回転機構上
     if (rotaryMechanismTopTime <= initRotaryMechanismTopTime) {
@@ -402,6 +407,19 @@ void ofApp::draw(){
 }
 
 //--------------------------------------------------------------
+void ofApp::initMold(){
+    if(mold01Time >= mold01Duration) mold01Time = 0;
+    if(mold02Time >= mold02Duration) mold02Time = 0;
+    if(mold03Time >= mold03Duration) mold03Time = -12;
+    if(mold04Time >= mold04Duration) mold04Time = -12;
+    if(mold05Time >= mold05Duration) mold05Time = -12;
+    if(mold06Time >= mold06Duration) mold06Time = -18;
+    if(mold07Time >= mold07Duration) mold07Time = -45;
+    if(mold08Time >= mold08Duration) mold08Time = -53;
+    if(mold09Time >= mold09Duration) mold09Time = -69;
+}
+
+//--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     switch (key) {
         case 'l':
@@ -420,15 +438,7 @@ void ofApp::keyPressed(int key){
             updateParamStop = !updateParamStop;
             break;
         case '0':
-            mold01Time = 0;
-            mold02Time = 0;
-            mold03Time = -12;
-            mold04Time = -12;
-            mold05Time = -12;
-            mold06Time = -18;
-            mold07Time = -45;
-            mold08Time = -53;
-            mold09Time = -69;
+            initMold();
             break;
     }
 }
