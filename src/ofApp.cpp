@@ -70,6 +70,92 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     
+    // chack all button for push
+    for (int i = 0; i < joy_.getButtonNum(); i++) {
+        if (joy_.isPressed(i)) {
+            ofLog() << "pressed :" << i;
+            if (i==0) {
+                // 青のXボタン押
+                ellipse03Move = !ellipse03Move;
+            }
+            if (i==2) {
+                // 黄のBボタン押
+                vector<int> rands = {};
+                if(mold01Time >= mold01Duration) {
+                    rands.push_back(0);
+                }
+                if(mold02Time >= mold02Duration) {
+                    rands.push_back(1);
+                }
+                if(mold03Time >= mold03Duration) {
+                    rands.push_back(2);
+                }
+                if(mold04Time >= mold04Duration) {
+                    rands.push_back(3);
+                }
+                if(mold05Time >= mold05Duration) {
+                    rands.push_back(4);
+                }
+                if(mold06Time >= mold06Duration) {
+                    rands.push_back(5);
+                }
+                if(mold07Time >= mold07Duration) {
+                    rands.push_back(6);
+                }
+                if(mold09Time >= mold09Duration) {
+                    rands.push_back(7);
+                }
+                if (rands.size() > 0) {
+                    int rand = rands[ofRandom(rands.size())];
+                    switch (rand) {
+                        case 0:
+                            if(mold01Time >= mold01Duration) mold01Time = 0;
+                            break;
+                        case 1:
+                            if(mold02Time >= mold02Duration) mold02Time = 0;
+                            break;
+                        case 2:
+                            if(mold03Time >= mold03Duration) mold03Time = 0;
+                            break;
+                        case 3:
+                            if(mold04Time >= mold04Duration) mold04Time = 0;
+                            break;
+                        case 4:
+                            if(mold05Time >= mold05Duration) mold05Time = 0;
+                            break;
+                        case 5:
+                            if(mold06Time >= mold06Duration) mold06Time = 0;
+                            break;
+                        case 6:
+                            if(mold07Time >= mold07Duration) mold07Time = 0;
+                            break;
+                        case 7:
+                            if(mold09Time >= mold09Duration) mold09Time = 0;
+                            break;
+                    }
+                }
+            }
+            if (i==3) {
+                // 緑のYボタン押
+                rotaryMechanismBottomMove = true;
+            }
+            if (i==4 || i==5) {
+                // LRボタン押
+                rotaryMechanismTopTime = 0;
+            }
+        }
+        if (joy_.isPushing(i)) {
+            ofLog() << "pushing :" << i;
+        }
+        if (joy_.isRelease(i)) {
+            ofLog() << "release :" << i;
+            if (i==3) {
+                // 緑のYボタン離
+                rotaryMechanismBottomMove = false;
+            }
+        }
+    }
+    
     float ellipse03Translate = ellipse03TranslateRate*38;
     
     float rotaryMechanismBottomX1 = 153.03+28.06*cos(DegToRad(rotaryMechanismBottomDegree));
@@ -167,18 +253,6 @@ void ofApp::update(){
     svg.loadFromString(svgCode);
     if (!updateParamStop) updateParam();
     
-    // chack all button for push
-    for (int i = 0; i < joy_.getButtonNum(); i++) {
-        if (joy_.isPressed(i)) {
-            ofLog() << "pressed :" << i;
-        }
-        if (joy_.isPushing(i)) {
-            ofLog() << "pushing :" << i;
-        }
-        if (joy_.isRelease(i)) {
-            ofLog() << "release :" << i;
-        }
-    }
 }
 
 //--------------------------------------------------------------
