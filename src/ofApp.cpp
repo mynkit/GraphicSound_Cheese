@@ -110,6 +110,14 @@ void ofApp::update(){
         <circle style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="%f" cy="%f" r="9.74"/>
         <line style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" x1="%f" y1="%f" x2="%f" y2="%f"/>
     </g>
+    <g id="カビ07">
+        <circle cx="%f" cy="%f" r="12.85"/>
+        <rect x="%f" y="%f" width="25.7" height="%f" style="fill:#ffffff"/>
+    </g>
+    <g id="カビ09">
+        <circle cx="%f" cy="%f" r="12.85"/>
+        <rect x="%f" y="%f" width="25.7" height="%f" style="fill:#ffffff"/>
+    </g>
     <g id="カビ01">
         <circle cx="%f" cy="%f" r="12.85"/>
         <rect x="%f" y="%f" width="25.7" height="%f" style="fill:#ffffff"/>
@@ -130,16 +138,8 @@ void ofApp::update(){
         <circle cx="%f" cy="%f" r="12.85"/>
         <rect x="%f" y="%f" width="25.7" height="%f" style="fill:#ffffff"/>
     </g>
-    <g id="カビ07">
-        <circle cx="%f" cy="%f" r="12.85"/>
-        <rect x="%f" y="%f" width="25.7" height="%f" style="fill:#ffffff"/>
-    </g>
     <g id="カビ08">
         <circle cx="%f" cy="%f" r="12.85"/>
-    </g>
-    <g id="カビ09">
-        <circle cx="%f" cy="%f" r="12.85"/>
-        <rect x="%f" y="%f" width="25.7" height="%f" style="fill:#ffffff"/>
     </g>
     <g id="楕円03">
         <ellipse style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="255.94" cy="258.74" rx="91.61" ry="25.9" transform="translate(%f, %f) "/>
@@ -162,7 +162,7 @@ void ofApp::update(){
             c0-1.06,0-3.09,0-3.09V66.42"/>
     </g>
     </svg>
-    )",int(ofGetWidth()*1.3), int(ofGetHeight()*1.3), rotaryMechanismBottomX1, rotaryMechanismBottomY1, rotaryMechanismBottomX2, rotaryMechanismBottomY1,rotaryMechanismBottomX1,rotaryMechanismBottomY2,rotaryMechanismBottomX2, rotaryMechanismBottomY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,mold01Position.x,mold01Position.y,mold01Position.x-12.85,mold01SinkY+12.85,mold01SinkDepth,mold02Position.x,mold02Position.y,mold03Position.x,mold03Position.y,mold04Position.x,mold04Position.y,mold05Position.x,mold05Position.y,mold06Position.x,mold06Position.y,mold06Position.x-12.85,mold06SinkY+12.85,mold06SinkDepth,mold07Position.x,mold07Position.y,mold07Position.x-12.85,mold07SinkY+12.85,mold07SinkDepth,mold08Position.x,mold08Position.y,mold09Position.x,mold09Position.y,mold09Position.x-12.85,mold09SinkY+12.85,mold09SinkDepth, ellipse03Translate, ellipse03Translate);
+    )",int(ofGetWidth()*1.3), int(ofGetHeight()*1.3), rotaryMechanismBottomX1, rotaryMechanismBottomY1, rotaryMechanismBottomX2, rotaryMechanismBottomY1,rotaryMechanismBottomX1,rotaryMechanismBottomY2,rotaryMechanismBottomX2, rotaryMechanismBottomY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,mold07Position.x,mold07Position.y,mold07Position.x-12.85,mold07SinkY+12.85,mold07SinkDepth,mold09Position.x,mold09Position.y,mold09Position.x-12.85,mold09SinkY+12.85,mold09SinkDepth,mold01Position.x,mold01Position.y,mold01Position.x-12.85,mold01SinkY+12.85,mold01SinkDepth,mold02Position.x,mold02Position.y,mold03Position.x,mold03Position.y,mold04Position.x,mold04Position.y,mold05Position.x,mold05Position.y,mold06Position.x,mold06Position.y,mold06Position.x-12.85,mold06SinkY+12.85,mold06SinkDepth,mold08Position.x,mold08Position.y, ellipse03Translate, ellipse03Translate);
     
     svg.loadFromString(svgCode);
     if (!updateParamStop) updateParam();
