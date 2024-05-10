@@ -14,6 +14,7 @@ public:
     void updateParam();
     void draw();
     void initMold();
+    void randomMoldFall();
 
     void keyPressed(int key);
     void keyReleased(int key);
