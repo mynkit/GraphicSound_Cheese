@@ -8,6 +8,10 @@ void ofApp::setup(){
     ofEnableArbTex();
     ofEnablePointSprites();
     
+    // OSCのセッティング
+    scSender.setup(HOST, SCPORT);
+    sdSender.setup(HOST, SDPORT);
+    
     // GamePadのセットアップ
     joy_.setup(GLFW_JOYSTICK_1);
     
@@ -252,6 +256,8 @@ void ofApp::updateParam(){
         rotaryMechanismTopTime += 1;
     }
     
+    prevRotaryMechanismTopDegree = rotaryMechanismTopDegree;
+    
     if (rotaryMechanismTopTime <= 5 * (SAMPLERATE / 30)) {
         rotaryMechanismTopDegree = ofMap(rotaryMechanismTopTime, 0, 5 * (SAMPLERATE / 30), 90, -90);
     } else if (rotaryMechanismTopTime <= 23 * (SAMPLERATE / 30)) {
@@ -268,6 +274,43 @@ void ofApp::updateParam(){
         rotaryMechanismTopDegree = 90 - 30 * sin((PI/(8. * (SAMPLERATE / 30.))) * (rotaryMechanismTopTime-(56. * (SAMPLERATE / 30))));
     } else {
         rotaryMechanismTopDegree = 90;
+    }
+    
+    rotaryMechanismVelocity = (rotaryMechanismTopDegree - prevRotaryMechanismTopDegree) * (SAMPLERATE / 30);
+    
+    // 回転に音つける
+    if (abs(rotaryMechanismVelocity) > 0.01) {
+        playRotateSound(pow(Min(ofMap(abs(rotaryMechanismVelocity), 0., 60., 0., 1.), 0.3), 0.7), 0.3, 1);
+    }
+    
+    // カビがでてくるときの音
+    
+    if (mold01Time == 0) {
+        playMoldFallSound(0.8, 440, -0.05, 1);
+    }
+    if (mold02Time == 0) {
+        playMoldFallSound(0.8, 220, 0.0, 1);
+    }
+    if (mold03Time == 0) {
+        playMoldFallSound(0.8, 440, -0.1, 1);
+    }
+    if (mold04Time == 0) {
+        playMoldFallSound(0.8, 220, -0.1, 1);
+    }
+    if (mold05Time == 0) {
+        playMoldFallSound(0.8, 220, -0.025, 1);
+    }
+    if (mold06Time == 0) {
+        playMoldFallSound(0.8, 220, 0.1, 1);
+    }
+    if (mold07Time == 0) {
+        playMoldFallSound(0.8, 220, -0.2, 1);
+    }
+    if (mold08Time == 0) {
+        playMoldFallSound(0.8, 277.183, 0.1, 1);
+    }
+    if (mold09Time == 0) {
+        playMoldFallSound(0.8, 440, 0.05, 1);
     }
     
     // カビ01
