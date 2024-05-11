@@ -291,6 +291,35 @@ private:
         m.clear();
     }
     
+    void playMoldReboundSound(float volume, float freq, float theta, float dis) {
+        ofxOscMessage m;
+        m.setAddress("/dirt/play");
+        m.addStringArg("s");
+        m.addStringArg("simpleSineWave");
+        m.addStringArg("amp");
+        m.addFloatArg(volume);
+        m.addStringArg("freq");
+        m.addFloatArg(freq);
+        m.addStringArg("sustain");
+        m.addFloatArg(0.25);
+        m.addStringArg("accelerate");
+        m.addFloatArg(2);
+        m.addStringArg("room");
+        m.addFloatArg(0.3);
+        m.addStringArg("size");
+        m.addFloatArg(0.5);
+        m.addStringArg("theta");
+        m.addFloatArg(theta);
+        m.addStringArg("dis");
+        m.addFloatArg(dis);
+        m.addStringArg("orbit");
+        m.addIntArg(4);
+        m.addStringArg("latency");
+        m.addFloatArg(0.1);
+        sdSender.sendMessage(m, false);
+        m.clear();
+    }
+    
     float Max(float a, float b) {
         return (a >= b) ? a : b;
     }

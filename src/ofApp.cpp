@@ -370,6 +370,23 @@ void ofApp::updateParam(){
         playMoldAttackSound(0.08, 1108.731, 0.2, 1);
     }
     
+    // チーズに跳ね返る音
+    if (mold01Time == 16 * (SAMPLERATE / 30)) {
+        playMoldReboundSound(0.15, 207.652, 0.0, 1);
+    }
+    if (mold02Time == 16 * (SAMPLERATE / 30)) {
+        playMoldReboundSound(0.15, 184.997, 0.0, 1);
+    }
+    if (mold03Time == 14 * (SAMPLERATE / 30)) {
+        playMoldReboundSound(0.15, 146.832, -0.1, 1);
+    }
+    if (mold04Time == 14 * (SAMPLERATE / 30)) {
+        playMoldReboundSound(0.15, 207.652, -0.1, 1);
+    }
+    if (mold08Time == 12 * (SAMPLERATE / 30)) {
+        playMoldReboundSound(0.15, 184.997, 0.1, 1);
+    }
+    
     // カビ01
     if (mold01Time >= 63 * (SAMPLERATE / 30)) {
         mold01SinkDepth = 25.7;
