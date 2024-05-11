@@ -309,19 +309,20 @@ void ofApp::updateParam(){
     
     
     ofxOscMessage m;
+    float sawSynthVol = 0.4;
     for (size_t i = 0; i < sawNodeIds.size(); ++i) {
         m.setAddress("/n_set");
         m.addIntArg(sawNodeIds[i]);
         m.addStringArg("amp");
         if (i==3) {
             float seed = ofMap(rotaryMechanismBottomDegreeSpeed, 0., rotaryMechanismBottomDegreeMaxSpeed, 0., 1);
-            m.addFloatArg(0.8*sawAmps[i]*pow(seed, 2.));
+            m.addFloatArg(sawSynthVol*0.8*sawAmps[i]*pow(seed, 2.));
         } else {
             float minVol = 0.;
             if (ellipse03Move) {
                 minVol = 0.5;
             }
-            m.addFloatArg(0.8*sawAmps[i]*ofMap(rotaryMechanismBottomDegreeSpeed, 0., rotaryMechanismBottomDegreeMaxSpeed, minVol, 0.8));
+            m.addFloatArg(sawSynthVol*0.8*sawAmps[i]*ofMap(rotaryMechanismBottomDegreeSpeed, 0., rotaryMechanismBottomDegreeMaxSpeed, minVol, 0.8));
         }
         m.addStringArg("freq");
         m.addFloatArg(sawFreqs[i]*329.628/440.);
@@ -377,7 +378,7 @@ void ofApp::updateParam(){
         if(mold05Time >= mold05Duration) mold05Time = (int)ofRandom(-15, 0);
         if(mold06Time >= mold06Duration) mold06Time = (int)ofRandom(-15, 0);
         if(mold07Time >= mold07Duration) mold07Time = (int)ofRandom(-15, 0);
-        if(mold08Time >= mold08Duration) mold09Time = (int)ofRandom(-15, 0);
+        if(mold09Time >= mold09Duration) mold09Time = (int)ofRandom(-15, 0);
     }
     
     if (mold01Time == 0) {
@@ -564,7 +565,7 @@ void ofApp::updateParam(){
     
     // 煙突
     if (chimneyTime == 0) {
-        playChimneyVibrateSound(0.15, 0.0, 1);
+        playChimneyVibrateSound(0.13, 0.0, 1);
     }
     
     // 時刻更新
