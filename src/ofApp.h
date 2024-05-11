@@ -104,11 +104,11 @@ public:
     
     vector<int> sawNodeIds = {100, 101, 102, 103, 104};
     vector<float> sawFreqs = {110., 220., 165., 207.652*2, 275.};
-    vector<float> sawBpfs = {110., 220.*4., 165.*3., 220*2, 275.*2.};
+    vector<float> sawBpfs = {110., 220.*4., 165.*3., 220*3, 275.*2.};
     vector<float> sawReverbs = {0., 0., 0, 0, 0};
     vector<float> sawParFreqs = {0.022, 0.013, 0.01, 0.05, 0.008};
     vector<float> sawPan2Freqs = {0.03, 0.07, 0.05, 0., 0.03};
-    vector<float> sawAmps = {1., 1.25, 1.5, 0.8, 0.5};
+    vector<float> sawAmps = {1., 1.25, 1.5, 1.0, 0.5};
 		
 private:
     ofxJoystick joy_;
