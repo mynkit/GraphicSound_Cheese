@@ -287,7 +287,7 @@ void ofApp::updateParam(){
             float seed = ofMap(rotaryMechanismBottomDegreeSpeed, 0., rotaryMechanismBottomDegreeMaxSpeed, 0., 1);
             m.addFloatArg(0.8*sawAmps[i]*pow(seed, 2.));
         } else {
-            m.addFloatArg(0.8*sawAmps[i]*ofMap(rotaryMechanismBottomDegreeSpeed, 0., rotaryMechanismBottomDegreeMaxSpeed, 0.33, 1));
+            m.addFloatArg(0.8*sawAmps[i]*ofMap(rotaryMechanismBottomDegreeSpeed, 0., rotaryMechanismBottomDegreeMaxSpeed, 0.2, 1));
         }
         m.addStringArg("freq");
         m.addFloatArg(sawFreqs[i]*329.628/440.);
@@ -360,6 +360,14 @@ void ofApp::updateParam(){
     }
     if (mold09Time == 0) {
         playMoldFallSound(0.8, 440, 0.05, 1);
+    }
+    
+    // 回転機構_上に当たるときの音
+    if (mold01Time == 33 * (SAMPLERATE / 30)) {
+        playMoldAttackSound(0.092, 1479.978, 0.2, 1);
+    }
+    if (mold08Time == 29 * (SAMPLERATE / 30)) {
+        playMoldAttackSound(0.08, 1108.731, 0.2, 1);
     }
     
     // カビ01
