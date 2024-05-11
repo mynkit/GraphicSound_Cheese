@@ -226,7 +226,7 @@ private:
         m.addStringArg("orbit");
         m.addIntArg(1);
         m.addStringArg("latency");
-        m.addFloatArg(0.1);
+        m.addFloatArg(0.05);
         sdSender.sendMessage(m, false);
         m.clear();
     }
