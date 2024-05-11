@@ -309,7 +309,7 @@ void ofApp::updateParam(){
     
     
     ofxOscMessage m;
-    float sawSynthVol = 0.4;
+    float sawSynthVol = 0.8;
     for (size_t i = 0; i < sawNodeIds.size(); ++i) {
         m.setAddress("/n_set");
         m.addIntArg(sawNodeIds[i]);
@@ -319,9 +319,6 @@ void ofApp::updateParam(){
             m.addFloatArg(sawSynthVol*0.8*sawAmps[i]*pow(seed, 2.));
         } else {
             float minVol = 0.;
-            if (ellipse03Move) {
-                minVol = 0.5;
-            }
             m.addFloatArg(sawSynthVol*0.8*sawAmps[i]*ofMap(rotaryMechanismBottomDegreeSpeed, 0., rotaryMechanismBottomDegreeMaxSpeed, minVol, 0.8));
         }
         m.addStringArg("freq");
@@ -565,7 +562,7 @@ void ofApp::updateParam(){
     
     // 煙突
     if (chimneyTime == 0) {
-        playChimneyVibrateSound(0.13, 0.0, 1);
+        playChimneyVibrateSound(0.25, 0.0, 1);
     }
     
     // 時刻更新
