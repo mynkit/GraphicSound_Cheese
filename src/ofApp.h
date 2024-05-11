@@ -34,6 +34,10 @@ public:
     void gotMessage(ofMessage msg);
     void exit();
     
+    int defaultBackgroundColor = 255;
+    int pausedBackgroundColor = 100;
+    int backgroundColor = defaultBackgroundColor;
+    
     // OSC
     ofxOscSender scSender;
     ofxOscSender sdSender;

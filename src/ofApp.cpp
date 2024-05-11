@@ -122,6 +122,9 @@ void ofApp::update(){
                 // LRボタン押
                 rotaryMechanismTopTime = 0;
             }
+            if (i==9) {
+                updateParamStop = !updateParamStop;
+            }
         }
         if (joy_.isPushing(i)) {
             ofLog() << "pushing :" << i;
@@ -133,6 +136,22 @@ void ofApp::update(){
                 rotaryMechanismBottomMove = false;
             }
         }
+    }
+    
+    if (updateParamStop) {
+        backgroundColor = pausedBackgroundColor;
+        // PAUSEモードのときはシンセの音量0にする
+        ofxOscMessage m;
+        for (size_t i = 0; i < sawNodeIds.size(); ++i) {
+            m.setAddress("/n_set");
+            m.addIntArg(sawNodeIds[i]);
+            m.addStringArg("amp");
+            m.addFloatArg(0.);
+            scSender.sendMessage(m, false);
+            m.clear();
+        }
+    } else {
+        backgroundColor = defaultBackgroundColor;
     }
     
     float ellipse03Translate = ellipse03TranslateRate*38;
@@ -153,8 +172,8 @@ void ofApp::update(){
                               width="%d" height="%d" viewBox="55 70 650.28 665.28" style="enable-background:new 55 70 650.28 665.28;" xml:space="preserve">
     <g id="本体">
         <g>
-            <polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" points="75.93,255.12 75.93,546.66 349.43,546.66         "/>
-            <polygon style="fill:#FFFFFF;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" points="75.93,255.12 165.86,165.19 439.37,456.72 349.43,546.66         "/>
+            <polygon style="fill:rgb(%d,%d,%d);stroke:#000000;stroke-width:1;stroke-miterlimit:10;" points="75.93,255.12 75.93,546.66 349.43,546.66         "/>
+            <polygon style="fill:rgb(%d,%d,%d) ;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" points="75.93,255.12 165.86,165.19 439.37,456.72 349.43,546.66         "/>
         </g>
     </g>
     <g id="車輪左">
@@ -177,15 +196,15 @@ void ofApp::update(){
     </g>
     <g id="カビ07">
         <circle cx="%f" cy="%f" r="12.85"/>
-        <rect x="%f" y="%f" width="25.7" height="%f" style="fill:#ffffff"/>
+        <rect x="%f" y="%f" width="25.7" height="%f" style="fill:rgb(%d,%d,%d) "/>
     </g>
     <g id="カビ09">
         <circle cx="%f" cy="%f" r="12.85"/>
-        <rect x="%f" y="%f" width="25.7" height="%f" style="fill:#ffffff"/>
+        <rect x="%f" y="%f" width="25.7" height="%f" style="fill:rgb(%d,%d,%d) "/>
     </g>
     <g id="カビ01">
         <circle cx="%f" cy="%f" r="12.85"/>
-        <rect x="%f" y="%f" width="25.7" height="%f" style="fill:#ffffff"/>
+        <rect x="%f" y="%f" width="25.7" height="%f" style="fill:rgb(%d,%d,%d) "/>
     </g>
     <g id="カビ02">
         <circle cx="%f" cy="%f" r="12.85"/>
@@ -201,7 +220,7 @@ void ofApp::update(){
     </g>
     <g id="カビ06">
         <circle cx="%f" cy="%f" r="12.85"/>
-        <rect x="%f" y="%f" width="25.7" height="%f" style="fill:#ffffff"/>
+        <rect x="%f" y="%f" width="25.7" height="%f" style="fill:rgb(%d,%d,%d) "/>
     </g>
     <g id="カビ08">
         <circle cx="%f" cy="%f" r="12.85"/>
@@ -223,11 +242,11 @@ void ofApp::update(){
         <rect x="-1323.57" y="47.68" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" width="50.17" height="90.08"/>
         <rect x="-1416.19" y="92.72" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" width="50.17" height="90.08"/>
         <polygon style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" points="-1323.57,137.76 -1366.02,182.8 -1366.02,92.72 -1323.57,47.68     "/>
-        <path style="fill:#FFFFFF;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" d="M205.66,66.42v64.55c0,0,0,2.04,0,3.09c0,11.07,22.51,20.04,50.28,20.04c27.77,0,50.28-8.97,50.28-20.04
+        <path style="fill:rgb(%d,%d,%d) ;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" d="M205.66,66.42v64.55c0,0,0,2.04,0,3.09c0,11.07,22.51,20.04,50.28,20.04c27.77,0,50.28-8.97,50.28-20.04
             c0-1.06,0-3.09,0-3.09V66.42"/>
     </g>
     </svg>
-    )",int(ofGetWidth()*1.3), int(ofGetHeight()*1.3), rotaryMechanismBottomX1, rotaryMechanismBottomY1, rotaryMechanismBottomX2, rotaryMechanismBottomY1,rotaryMechanismBottomX1,rotaryMechanismBottomY2,rotaryMechanismBottomX2, rotaryMechanismBottomY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,mold07Position.x,mold07Position.y,mold07Position.x-12.85,mold07SinkY+12.85,mold07SinkDepth,mold09Position.x,mold09Position.y,mold09Position.x-12.85,mold09SinkY+12.85,mold09SinkDepth,mold01Position.x,mold01Position.y,mold01Position.x-12.85,mold01SinkY+12.85,mold01SinkDepth,mold02Position.x,mold02Position.y,mold03Position.x,mold03Position.y,mold04Position.x,mold04Position.y,mold05Position.x,mold05Position.y,mold06Position.x,mold06Position.y,mold06Position.x-12.85,mold06SinkY+12.85,mold06SinkDepth,mold08Position.x,mold08Position.y, ellipse03Translate, ellipse03Translate);
+    )",int(ofGetWidth()*1.3), int(ofGetHeight()*1.3), backgroundColor,backgroundColor,backgroundColor, backgroundColor,backgroundColor,backgroundColor, rotaryMechanismBottomX1, rotaryMechanismBottomY1, rotaryMechanismBottomX2, rotaryMechanismBottomY1,rotaryMechanismBottomX1,rotaryMechanismBottomY2,rotaryMechanismBottomX2, rotaryMechanismBottomY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,mold07Position.x,mold07Position.y,mold07Position.x-12.85,mold07SinkY+12.85,mold07SinkDepth,backgroundColor,backgroundColor,backgroundColor,mold09Position.x,mold09Position.y,mold09Position.x-12.85,mold09SinkY+12.85,mold09SinkDepth,backgroundColor,backgroundColor,backgroundColor,mold01Position.x,mold01Position.y,mold01Position.x-12.85,mold01SinkY+12.85,mold01SinkDepth,backgroundColor,backgroundColor,backgroundColor,mold02Position.x,mold02Position.y,mold03Position.x,mold03Position.y,mold04Position.x,mold04Position.y,mold05Position.x,mold05Position.y,mold06Position.x,mold06Position.y,mold06Position.x-12.85,mold06SinkY+12.85,mold06SinkDepth,backgroundColor,backgroundColor,backgroundColor,mold08Position.x,mold08Position.y, ellipse03Translate, ellipse03Translate, backgroundColor,backgroundColor,backgroundColor);
     
     svg.loadFromString(svgCode);
     if (!updateParamStop) updateParam();
@@ -547,7 +566,7 @@ void ofApp::updateParam(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    ofBackground(255, 0);
+    ofBackground(backgroundColor, 0);
     ofSetCurveResolution(120);
     svg.draw();
 }
