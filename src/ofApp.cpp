@@ -16,7 +16,7 @@ void ofApp::setup(){
     joy_.setup(GLFW_JOYSTICK_1);
     
     // 楕円03
-    ellipse03Move = true;
+    ellipse03Move = false;
     ellipse03TranslateRate = 0.;
     ellipse03TranslateRateDirection = true;
     ellipse03TranslateRateSpeed = 1. * (1. / SAMPLERATE);
@@ -291,7 +291,7 @@ void ofApp::updateParam(){
             if (ellipse03Move) {
                 minVol = 0.5;
             }
-            m.addFloatArg(0.8*sawAmps[i]*ofMap(rotaryMechanismBottomDegreeSpeed, 0., rotaryMechanismBottomDegreeMaxSpeed, minVol, 0.9));
+            m.addFloatArg(0.8*sawAmps[i]*ofMap(rotaryMechanismBottomDegreeSpeed, 0., rotaryMechanismBottomDegreeMaxSpeed, minVol, 0.8));
         }
         m.addStringArg("freq");
         m.addFloatArg(sawFreqs[i]*329.628/440.);
