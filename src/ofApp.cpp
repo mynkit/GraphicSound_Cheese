@@ -117,7 +117,8 @@ void ofApp::update(){
                 ellipse03Move = !ellipse03Move;
             }
             if (i==1) {
-                chimneyTime = 0;
+                // 赤のAボタン押
+                if (chimneyTime>=chimneyDuration) chimneyTime = 0;
             }
             if (i==2) {
                 // 黄のBボタン押
@@ -132,6 +133,7 @@ void ofApp::update(){
                 rotaryMechanismTopTime = 0;
             }
             if (i==9) {
+                // STARTボタン押
                 updateParamStop = !updateParamStop;
             }
         }
@@ -696,7 +698,7 @@ void ofApp::keyPressed(int key){
             randomMoldFall();
             break;
         case 'a':
-            chimneyTime = 0;
+            if (chimneyTime>=chimneyDuration) chimneyTime = 0;
             break;
         case ' ':
             updateParamStop = !updateParamStop;
