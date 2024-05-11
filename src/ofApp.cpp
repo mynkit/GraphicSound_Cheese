@@ -111,7 +111,7 @@ void ofApp::update(){
     // chack all button for push
     for (int i = 0; i < joy_.getButtonNum(); i++) {
         if (joy_.isPressed(i)) {
-            ofLog() << "pressed :" << i;
+//            ofLog() << "pressed :" << i;
             if (i==0) {
                 // 青のXボタン押
                 ellipse03Move = !ellipse03Move;
@@ -136,10 +136,10 @@ void ofApp::update(){
             }
         }
         if (joy_.isPushing(i)) {
-            ofLog() << "pushing :" << i;
+//            ofLog() << "pushing :" << i;
         }
         if (joy_.isRelease(i)) {
-            ofLog() << "release :" << i;
+//            ofLog() << "release :" << i;
             if (i==3) {
                 // 緑のYボタン離
                 rotaryMechanismBottomMove = false;
@@ -399,6 +399,7 @@ void ofApp::updateParam(){
         playMoldAttackSound(0.092, 1479.978, 0.2, 1);
     }
     if (mold08Time == 29 * (SAMPLERATE / 30) && abs(rotaryMechanismVelocity)>0) {
+//        cout << rotaryMechanismTopDegree << endl;
         playMoldAttackSound(0.08, 1108.731, 0.2, 1);
     }
     
