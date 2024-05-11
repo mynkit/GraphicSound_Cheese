@@ -32,6 +32,7 @@ public:
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
+    void exit();
     
     // OSC
     ofxOscSender scSender;
@@ -100,6 +101,14 @@ public:
     float DegToRad(float rad) {
         return PI * rad / 180.;
     }
+    
+    vector<int> sawNodeIds = {100, 101, 102, 103, 104};
+    vector<float> sawFreqs = {110., 220., 165., 207.652*2, 275.};
+    vector<float> sawBpfs = {110., 220.*4., 165.*3., 220*2, 275.*2.};
+    vector<float> sawReverbs = {0., 0., 0, 0, 0};
+    vector<float> sawParFreqs = {0.022, 0.013, 0.01, 0.05, 0.008};
+    vector<float> sawPan2Freqs = {0.03, 0.07, 0.05, 0., 0.03};
+    vector<float> sawAmps = {1., 1.25, 1.5, 1.25, 0.5};
 		
 private:
     ofxJoystick joy_;
@@ -163,13 +172,13 @@ private:
             m.addStringArg("freq");
             m.addIntArg(freq);
             m.addStringArg("amp");
-            m.addFloatArg(0.7*volume*amp);
+            m.addFloatArg(0.6*volume*amp);
             m.addStringArg("sustain");
             m.addFloatArg(sustain);
             m.addStringArg("accelerate");
             m.addFloatArg(accelerate);
             m.addStringArg("room");
-            m.addFloatArg(0.05);
+            m.addFloatArg(0.1);
             m.addStringArg("size");
             m.addFloatArg(0.1);
             m.addStringArg("theta");
@@ -193,11 +202,9 @@ private:
         m.addStringArg("freq");
         m.addFloatArg(freq*4);
         m.addStringArg("amp");
-        m.addFloatArg(volume);
+        m.addFloatArg(volume*0.4);
         m.addStringArg("sustain");
         m.addFloatArg(0.015);
-        m.addStringArg("octaveMix");
-        m.addFloatArg(0.5);
         m.addStringArg("accelerate");
         m.addFloatArg(0.5);
         m.addStringArg("room");
@@ -218,6 +225,39 @@ private:
         m.addFloatArg(dis);
         m.addStringArg("orbit");
         m.addIntArg(1);
+        m.addStringArg("latency");
+        m.addFloatArg(0.1);
+        sdSender.sendMessage(m, false);
+        m.clear();
+    }
+    
+    void playSineSound(float volume, float freq, float sustain, float theta, float dis) {
+        ofxOscMessage m;
+        m.setAddress("/dirt/play");
+        m.addStringArg("s");
+        m.addStringArg("simpleSineWave");
+        m.addStringArg("freq");
+        m.addFloatArg(freq);
+        m.addStringArg("amp");
+        m.addFloatArg(volume);
+        m.addStringArg("sustain");
+        m.addFloatArg(sustain);
+        m.addStringArg("accelerate");
+        m.addFloatArg(0);
+        m.addStringArg("room");
+        m.addFloatArg(0.3);
+        m.addStringArg("size");
+        m.addFloatArg(0.5);
+        m.addStringArg("vibratoFreq");
+        m.addFloatArg(8);
+        m.addStringArg("vibratoDepth");
+        m.addFloatArg(0.24);
+        m.addStringArg("theta");
+        m.addFloatArg(theta);
+        m.addStringArg("dis");
+        m.addFloatArg(dis);
+        m.addStringArg("orbit");
+        m.addIntArg(2);
         m.addStringArg("latency");
         m.addFloatArg(0.1);
         sdSender.sendMessage(m, false);

@@ -69,6 +69,34 @@ void ofApp::setup(){
     mold06SinkDepth = 0.;
     mold07SinkDepth = 0.;
     mold09SinkDepth = 0.;
+    
+    // sawの準備
+    ofxOscMessage m;
+    for (size_t i = 0; i < sawNodeIds.size(); ++i) {
+        m.setAddress("/n_free");
+        m.addIntArg(sawNodeIds[i]);
+        scSender.sendMessage(m, false);
+        m.clear();
+        m.setAddress("/s_new");
+        m.addStringArg("sawDry");
+        m.addIntArg(sawNodeIds[i]);
+        m.addIntArg(1);
+        m.addIntArg(0);
+        m.addStringArg("amp");
+        m.addFloatArg(sawAmps[i]*0.);
+        m.addStringArg("freq");
+        m.addFloatArg(sawFreqs[i]);
+        m.addStringArg("bpf");
+        m.addFloatArg(sawBpfs[i]);
+        m.addStringArg("reverb");
+        m.addFloatArg(sawReverbs[i]);
+        m.addStringArg("parFreqs");
+        m.addFloatArg(sawParFreqs[i]);
+        m.addStringArg("pan2Freqs");
+        m.addFloatArg(sawPan2Freqs[i]);
+        scSender.sendMessage(m, false);
+        m.clear();
+    }
 }
 
 //--------------------------------------------------------------
@@ -244,7 +272,28 @@ void ofApp::updateParam(){
         rotaryMechanismBottomDegreeSpeed = 0;
     }
     rotaryMechanismBottomDegree += rotaryMechanismBottomDegreeSpeed;
-    if (rotaryMechanismBottomDegree>=360) {rotaryMechanismBottomDegree-=360.;}
+    if (rotaryMechanismBottomDegree>=360) {
+        rotaryMechanismBottomDegree-=360.;
+        playSineSound(0.2, 164.814, 0.03, 0, 1);
+    }
+    
+    
+    ofxOscMessage m;
+    for (size_t i = 0; i < sawNodeIds.size(); ++i) {
+        m.setAddress("/n_set");
+        m.addIntArg(sawNodeIds[i]);
+        m.addStringArg("amp");
+        if (i==3) {
+            float seed = ofMap(rotaryMechanismBottomDegreeSpeed, 0., rotaryMechanismBottomDegreeMaxSpeed, 0., 1);
+            m.addFloatArg(0.8*sawAmps[i]*pow(seed, 2.));
+        } else {
+            m.addFloatArg(0.8*sawAmps[i]*ofMap(rotaryMechanismBottomDegreeSpeed, 0., rotaryMechanismBottomDegreeMaxSpeed, 0.25, 1));
+        }
+        m.addStringArg("freq");
+        m.addFloatArg(sawFreqs[i]*329.628/440.);
+        scSender.sendMessage(m, false);
+        m.clear();
+    }
     
     // 回転機構下によって球が出される
     if (rotaryMechanismBottomDegreeSpeed >= 14.2 && rotaryMechanismBottomMove) {
@@ -620,4 +669,15 @@ void ofApp::gotMessage(ofMessage msg){
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){ 
 
+}
+
+//--------------------------------------------------------------
+void ofApp::exit(){
+    ofxOscMessage m;
+    for (size_t i = 0; i < sawNodeIds.size(); ++i) {
+        m.setAddress("/n_free");
+        m.addIntArg(sawNodeIds[i]);
+        scSender.sendMessage(m, false);
+        m.clear();
+    }
 }
