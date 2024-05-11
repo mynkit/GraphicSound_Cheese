@@ -567,8 +567,15 @@ void ofApp::updateParam(){
 //--------------------------------------------------------------
 void ofApp::draw(){
     ofBackground(backgroundColor, 0);
-    ofSetCurveResolution(120);
+//    ofSetCurveResolution(120);
     svg.draw();
+    
+    if (updateParamStop) {
+        ofSetColor(255);
+        string pauseTxt = "PAUSE";
+        ofRectangle pauseTxtSize = getBitmapStringBoundingBox(pauseTxt);
+        ofDrawBitmapString(pauseTxt, ofGetWidth()*0.5 - pauseTxtSize.width*0.5, ofGetHeight()*0.5 - pauseTxtSize.height*0.5);
+    }
 }
 
 //--------------------------------------------------------------
