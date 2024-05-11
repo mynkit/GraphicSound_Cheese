@@ -70,6 +70,8 @@ void ofApp::setup(){
     mold07SinkDepth = 0.;
     mold09SinkDepth = 0.;
     
+    chimneyVibrate = false;
+    
     // sawの準備
     ofxOscMessage m;
     for (size_t i = 0; i < sawNodeIds.size(); ++i) {
@@ -389,7 +391,7 @@ void ofApp::updateParam(){
     if (mold01Time == 33 * (SAMPLERATE / 30)) {
         playMoldAttackSound(0.092, 1479.978, 0.2, 1);
     }
-    if (mold08Time == 29 * (SAMPLERATE / 30)) {
+    if (mold08Time == 29 * (SAMPLERATE / 30) && abs(rotaryMechanismVelocity)>0) {
         playMoldAttackSound(0.08, 1108.731, 0.2, 1);
     }
     
@@ -513,8 +515,13 @@ void ofApp::updateParam(){
         mold08Position.x = ofMap(mold08Time, 12 * (SAMPLERATE / 30), 29 * (SAMPLERATE / 30), 246, 405);
         mold08Position.y = 0.0015*pow(mold08Position.x - 450, 2) - 0.0015*pow(246 - 450, 2) + 284;
     } else if (mold08Time <= mold08Duration) {
-        mold08Position.x = ofMap(mold08Time, 29 * (SAMPLERATE / 30), mold08Duration, 405, 600);
-        mold08Position.y = 0.007*pow(mold08Position.x - 400, 2) - 0.007*pow(405 - 400, 2) + 0.0015*pow(405 - 450, 2) - 0.0015*pow(246 - 450, 2) + 284;
+        if (abs(rotaryMechanismVelocity)>0) {
+            mold08Position.x = ofMap(mold08Time, 29 * (SAMPLERATE / 30), mold08Duration, 405, 600);
+            mold08Position.y = 0.007*pow(mold08Position.x - 400, 2) - 0.007*pow(405 - 400, 2) + 0.0015*pow(405 - 450, 2) - 0.0015*pow(246 - 450, 2) + 284;
+        } else {
+            mold08Position.x = ofMap(mold08Time, 29 * (SAMPLERATE / 30), mold08Duration, 405, 600);
+            mold08Position.y = 0.0015*pow(mold08Position.x - 450, 2) - 0.0015*pow(246 - 450, 2) + 284;
+        }
     }
     
     // カビ09

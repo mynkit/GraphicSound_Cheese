@@ -102,9 +102,10 @@ public:
     float mold09SinkDepth;
     float mold09SinkY;
     
-    float DegToRad(float rad) {
-        return PI * rad / 180.;
-    }
+    // 煙突
+    bool chimneyVibrate;
+    int chimneyTime;
+    int chimneyDuration;
     
     vector<int> sawNodeIds = {100, 101, 102, 103, 104};
     vector<float> sawFreqs = {110., 220., 165., 207.652*2, 275.};
@@ -117,6 +118,10 @@ public:
 private:
     ofxJoystick joy_;
     ofxSVG svg;
+    
+    float DegToRad(float rad) {
+        return PI * rad / 180.;
+    }
     
     ofRectangle getBitmapStringBoundingBox(string text){
         vector<string> lines = ofSplitString(text, "\n");
