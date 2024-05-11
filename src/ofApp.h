@@ -108,7 +108,7 @@ public:
     vector<float> sawReverbs = {0., 0., 0, 0, 0};
     vector<float> sawParFreqs = {0.022, 0.013, 0.01, 0.05, 0.008};
     vector<float> sawPan2Freqs = {0.03, 0.07, 0.05, 0., 0.03};
-    vector<float> sawAmps = {1., 1.25, 1.5, 1.25, 0.5};
+    vector<float> sawAmps = {1., 1.25, 1.5, 0.8, 0.5};
 		
 private:
     ofxJoystick joy_;
@@ -172,7 +172,7 @@ private:
             m.addStringArg("freq");
             m.addIntArg(freq);
             m.addStringArg("amp");
-            m.addFloatArg(0.6*volume*amp);
+            m.addFloatArg(0.5*volume*amp);
             m.addStringArg("sustain");
             m.addFloatArg(sustain);
             m.addStringArg("accelerate");

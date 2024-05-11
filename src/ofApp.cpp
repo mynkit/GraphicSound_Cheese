@@ -287,7 +287,7 @@ void ofApp::updateParam(){
             float seed = ofMap(rotaryMechanismBottomDegreeSpeed, 0., rotaryMechanismBottomDegreeMaxSpeed, 0., 1);
             m.addFloatArg(0.8*sawAmps[i]*pow(seed, 2.));
         } else {
-            m.addFloatArg(0.8*sawAmps[i]*ofMap(rotaryMechanismBottomDegreeSpeed, 0., rotaryMechanismBottomDegreeMaxSpeed, 0.25, 1));
+            m.addFloatArg(0.8*sawAmps[i]*ofMap(rotaryMechanismBottomDegreeSpeed, 0., rotaryMechanismBottomDegreeMaxSpeed, 0.33, 1));
         }
         m.addStringArg("freq");
         m.addFloatArg(sawFreqs[i]*329.628/440.);
