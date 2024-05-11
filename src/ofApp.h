@@ -356,6 +356,33 @@ private:
         m.clear();
     }
     
+    void playChimneyVibrateSound(float volume, float theta, float dis) {
+        ofxOscMessage m;
+        m.setAddress("/dirt/play");
+        m.addStringArg("s");
+        m.addStringArg("simpleSawWave");
+        m.addStringArg("amp");
+        m.addFloatArg(volume);
+        m.addStringArg("freq");
+        m.addFloatArg(55);
+        m.addStringArg("sustain");
+        m.addFloatArg(3);
+        m.addStringArg("room");
+        m.addFloatArg(0.0);
+        m.addStringArg("size");
+        m.addFloatArg(0.0);
+        m.addStringArg("theta");
+        m.addFloatArg(theta);
+        m.addStringArg("dis");
+        m.addFloatArg(dis);
+        m.addStringArg("orbit");
+        m.addIntArg(5);
+        m.addStringArg("latency");
+        m.addFloatArg(0.05);
+        sdSender.sendMessage(m, false);
+        m.clear();
+    }
+    
     float Max(float a, float b) {
         return (a >= b) ? a : b;
     }

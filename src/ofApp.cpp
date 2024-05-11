@@ -547,6 +547,11 @@ void ofApp::updateParam(){
         playMoldSinkSound(0.3, 0.05, 1);
     }
     
+    // 煙突
+    if (chimneyTime == 0) {
+        playChimneyVibrateSound(0.2, 0.0, 1);
+    }
+    
     // 時刻更新
     if (mold01Time <= mold01Duration) {
         mold01Time += 1;
