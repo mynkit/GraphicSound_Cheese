@@ -368,6 +368,18 @@ void ofApp::updateParam(){
     
     // カビがでてくるときの音
     
+    if (chimneyTime==(int)(chimneyDuration*0.6)) {
+        // 煙突の振動でカビが全部落ちる
+        if(mold01Time >= mold01Duration) mold01Time = (int)ofRandom(-15, 0);
+        if(mold02Time >= mold02Duration) mold02Time = (int)ofRandom(-15, 0);
+        if(mold03Time >= mold03Duration) mold03Time = (int)ofRandom(-15, 0);
+        if(mold04Time >= mold04Duration) mold04Time = (int)ofRandom(-15, 0);
+        if(mold05Time >= mold05Duration) mold05Time = (int)ofRandom(-15, 0);
+        if(mold06Time >= mold06Duration) mold06Time = (int)ofRandom(-15, 0);
+        if(mold07Time >= mold07Duration) mold07Time = (int)ofRandom(-15, 0);
+        if(mold08Time >= mold08Duration) mold09Time = (int)ofRandom(-15, 0);
+    }
+    
     if (mold01Time == 0) {
         playMoldFallSound(0.8, 440, -0.05, 1);
     }
