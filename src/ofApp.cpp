@@ -291,7 +291,7 @@ void ofApp::updateParam(){
             if (ellipse03Move) {
                 minVol = 0.5;
             }
-            m.addFloatArg(0.8*sawAmps[i]*ofMap(rotaryMechanismBottomDegreeSpeed, 0., rotaryMechanismBottomDegreeMaxSpeed, minVol, 1));
+            m.addFloatArg(0.8*sawAmps[i]*ofMap(rotaryMechanismBottomDegreeSpeed, 0., rotaryMechanismBottomDegreeMaxSpeed, minVol, 0.9));
         }
         m.addStringArg("freq");
         m.addFloatArg(sawFreqs[i]*329.628/440.);
