@@ -106,6 +106,8 @@ public:
     bool chimneyVibrate;
     int chimneyTime;
     int chimneyDuration;
+    float chimneyVibrateX;
+    float chimneyVibrateXRange;
     
     vector<int> sawNodeIds = {100, 101, 102, 103, 104};
     vector<float> sawFreqs = {110., 220., 165., 207.652*2, 275.};

@@ -71,6 +71,10 @@ void ofApp::setup(){
     mold09SinkDepth = 0.;
     
     chimneyVibrate = false;
+    chimneyDuration = 30 * (SAMPLERATE / 30);
+    chimneyTime = chimneyDuration + 1;
+    chimneyVibrateX = 0.;
+    chimneyVibrateXRange = 3;
     
     // sawの準備
     ofxOscMessage m;
@@ -111,6 +115,9 @@ void ofApp::update(){
             if (i==0) {
                 // 青のXボタン押
                 ellipse03Move = !ellipse03Move;
+            }
+            if (i==1) {
+                chimneyTime = 0;
             }
             if (i==2) {
                 // 黄のBボタン押
@@ -237,18 +244,18 @@ void ofApp::update(){
         <ellipse style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="255.94" cy="220" rx="91.61" ry="25.9" />
     </g>
     <g id="煙突">
-        <circle style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="-1338.75" cy="445.9" r="59.95"/>
-        <circle style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="-1284.84" cy="391.99" r="59.95"/>
-        <circle style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="-1230.93" cy="338.07" r="59.95"/>
-        <line style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" x1="-1338.75" y1="445.9" x2="-1175.3" y2="282.45"/>
-        <rect x="-1323.57" y="47.68" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" width="50.17" height="90.08"/>
-        <rect x="-1416.19" y="92.72" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" width="50.17" height="90.08"/>
-        <polygon style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" points="-1323.57,137.76 -1366.02,182.8 -1366.02,92.72 -1323.57,47.68     "/>
-        <path style="fill:rgb(%d,%d,%d) ;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" d="M205.66,66.42v64.55c0,0,0,2.04,0,3.09c0,11.07,22.51,20.04,50.28,20.04c27.77,0,50.28-8.97,50.28-20.04
+        <circle style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="%f" cy="445.9" r="59.95"/>
+        <circle style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="%f" cy="391.99" r="59.95"/>
+        <circle style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" cx="%f" cy="338.07" r="59.95"/>
+        <line style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" x1="%f" y1="445.9" x2="%f" y2="282.45"/>
+        <rect x="%f" y="47.68" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" width="50.17" height="90.08"/>
+        <rect x="%f" y="92.72" style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" width="50.17" height="90.08"/>
+        <polygon style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" points="%f,137.76 %f,182.8 %f,92.72 %f,47.68     "/>
+        <path transform="translate(%f, 0) " style="fill:rgb(%d,%d,%d) ;stroke:#000000;stroke-width:1;stroke-miterlimit:10;" d="M205.66,66.42v64.55c0,0,0,2.04,0,3.09c0,11.07,22.51,20.04,50.28,20.04c27.77,0,50.28-8.97,50.28-20.04
             c0-1.06,0-3.09,0-3.09V66.42"/>
     </g>
     </svg>
-    )",int(ofGetWidth()*1.3), int(ofGetHeight()*1.3), backgroundColor,backgroundColor,backgroundColor, backgroundColor,backgroundColor,backgroundColor, rotaryMechanismBottomX1, rotaryMechanismBottomY1, rotaryMechanismBottomX2, rotaryMechanismBottomY1,rotaryMechanismBottomX1,rotaryMechanismBottomY2,rotaryMechanismBottomX2, rotaryMechanismBottomY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,mold07Position.x,mold07Position.y,mold07Position.x-12.85,mold07SinkY+12.85,mold07SinkDepth,backgroundColor,backgroundColor,backgroundColor,mold09Position.x,mold09Position.y,mold09Position.x-12.85,mold09SinkY+12.85,mold09SinkDepth,backgroundColor,backgroundColor,backgroundColor,mold01Position.x,mold01Position.y,mold01Position.x-12.85,mold01SinkY+12.85,mold01SinkDepth,backgroundColor,backgroundColor,backgroundColor,mold02Position.x,mold02Position.y,mold03Position.x,mold03Position.y,mold04Position.x,mold04Position.y,mold05Position.x,mold05Position.y,mold06Position.x,mold06Position.y,mold06Position.x-12.85,mold06SinkY+12.85,mold06SinkDepth,backgroundColor,backgroundColor,backgroundColor,mold08Position.x,mold08Position.y, ellipse03Translate, ellipse03Translate, backgroundColor,backgroundColor,backgroundColor);
+    )",int(ofGetWidth()*1.3), int(ofGetHeight()*1.3), backgroundColor,backgroundColor,backgroundColor, backgroundColor,backgroundColor,backgroundColor, rotaryMechanismBottomX1, rotaryMechanismBottomY1, rotaryMechanismBottomX2, rotaryMechanismBottomY1,rotaryMechanismBottomX1,rotaryMechanismBottomY2,rotaryMechanismBottomX2, rotaryMechanismBottomY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,mold07Position.x,mold07Position.y,mold07Position.x-12.85,mold07SinkY+12.85,mold07SinkDepth,backgroundColor,backgroundColor,backgroundColor,mold09Position.x,mold09Position.y,mold09Position.x-12.85,mold09SinkY+12.85,mold09SinkDepth,backgroundColor,backgroundColor,backgroundColor,mold01Position.x,mold01Position.y,mold01Position.x-12.85,mold01SinkY+12.85,mold01SinkDepth,backgroundColor,backgroundColor,backgroundColor,mold02Position.x,mold02Position.y,mold03Position.x,mold03Position.y,mold04Position.x,mold04Position.y,mold05Position.x,mold05Position.y,mold06Position.x,mold06Position.y,mold06Position.x-12.85,mold06SinkY+12.85,mold06SinkDepth,backgroundColor,backgroundColor,backgroundColor,mold08Position.x,mold08Position.y, ellipse03Translate, ellipse03Translate, -1338.75+chimneyVibrateX,-1284.84+chimneyVibrateX,-1230.93+chimneyVibrateX,-1338.75+chimneyVibrateX,-1175.3+chimneyVibrateX,-1323.57+chimneyVibrateX,-1416.19+chimneyVibrateX,-1323.57+chimneyVibrateX,-1366.02+chimneyVibrateX,-1366.02+chimneyVibrateX,-1323.57+chimneyVibrateX,chimneyVibrateX,  backgroundColor,backgroundColor,backgroundColor);
     
     svg.loadFromString(svgCode);
     if (!updateParamStop) updateParam();
@@ -569,6 +576,14 @@ void ofApp::updateParam(){
         mold09Time += 1;
     }
     
+    if (chimneyTime <= chimneyDuration) {
+        chimneyTime += 1;
+        chimneyVibrateX = chimneyVibrateXRange;
+        chimneyVibrateXRange *= -1;
+    } else {
+        chimneyVibrateX = 0;
+    }
+    
 }
 
 //--------------------------------------------------------------
@@ -673,6 +688,9 @@ void ofApp::keyPressed(int key){
             break;
         case 'b':
             randomMoldFall();
+            break;
+        case 'a':
+            chimneyTime = 0;
             break;
         case ' ':
             updateParamStop = !updateParamStop;
