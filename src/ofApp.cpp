@@ -413,6 +413,7 @@ void ofApp::updateParam(){
         mold01Position.y = ofMap(mold01Time, 63 * (SAMPLERATE / 30), 65 * (SAMPLERATE / 30), mold01SinkY, mold01SinkY + 13);
     } else if (mold01Time <= mold01Duration) {
         mold01Position.y = ofMap(mold01Time, 65 * (SAMPLERATE / 30), mold01Duration, mold01SinkY + 13, mold01SinkY + 25.7);
+        playMoldSinkSound(0.3, -0.25, 1);
     }
     // カビ02
     if (mold02Time <= 16 * (SAMPLERATE / 30)) {
@@ -462,6 +463,7 @@ void ofApp::updateParam(){
         mold06Position.y = 374;
     } else if (mold06Time <= mold06Duration) {
         mold06Position.y = ofMap(mold06Time, 29 * (SAMPLERATE / 30), mold06Duration, mold06SinkY, mold06SinkY + 25.7);
+        playMoldSinkSound(0.3, 0.1, 1);
     }
     
     // カビ07
@@ -477,6 +479,7 @@ void ofApp::updateParam(){
         mold07Position.y = ofMap(mold07Time, 0, 18 * (SAMPLERATE / 30), 137, 284);
     } else if (mold07Time <= mold07Duration) {
         mold07Position.y = ofMap(mold07Time, 19 * (SAMPLERATE / 30), mold07Duration, mold07SinkY, mold07SinkY + 25.7);
+        playMoldSinkSound(0.3, -0.2, 1);
     }
     
     // カビ08
@@ -504,6 +507,7 @@ void ofApp::updateParam(){
         mold09Position.y = ofMap(mold09Time, 0, 21 * (SAMPLERATE / 30), 139, 320);
     } else if (mold09Time <= mold09Duration) {
         mold09Position.y = ofMap(mold09Time, 21 * (SAMPLERATE / 30), mold09Duration, 320, 343.7);
+        playMoldSinkSound(0.3, 0.05, 1);
     }
     
     // 時刻更新

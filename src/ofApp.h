@@ -114,10 +114,10 @@ private:
     ofxJoystick joy_;
     ofxSVG svg;
     
-    void playWaterSound(float volume, float theta, float dis) {
+    void playMoldSinkSound(float volume, float theta, float dis) {
         ofxOscMessage m;
-        float bubbleSizeMin = 18.;
-        float bubbleSizeMax = 100.;
+        float bubbleSizeMin = 16.;
+        float bubbleSizeMax = 60.;
         float rand_ = ofRandom(0.0, 1.0);
         float sustain = ofMap(rand_, 0., 1., 1/bubbleSizeMax, MIN(1/bubbleSizeMin, 0.08)) * 1.0;
         float freq = ofMap(sqrt(rand_), 0., 1., pow(bubbleSizeMax,2), pow(bubbleSizeMin,2));
@@ -132,7 +132,7 @@ private:
             m.addStringArg("freq");
             m.addIntArg(freq);
             m.addStringArg("amp");
-            m.addFloatArg(1*volume*amp);
+            m.addFloatArg(0.8*volume*amp);
             m.addStringArg("sustain");
             m.addFloatArg(sustain);
             m.addStringArg("accelerate");
@@ -270,7 +270,7 @@ private:
         m.addStringArg("s");
         m.addStringArg("supergong");
         m.addStringArg("amp");
-        m.addFloatArg(volume);
+        m.addFloatArg(volume*0.9);
         m.addStringArg("freq");
         m.addFloatArg(freq);
         m.addStringArg("sustain");
