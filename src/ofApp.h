@@ -367,10 +367,6 @@ private:
         m.addFloatArg(55);
         m.addStringArg("sustain");
         m.addFloatArg(2);
-        m.addStringArg("hpf");
-        m.addFloatArg(55./2.);
-        m.addStringArg("hpq");
-        m.addFloatArg(0.1);
         m.addStringArg("lpf");
         m.addFloatArg(700);
         m.addStringArg("room");
