@@ -172,7 +172,7 @@ private:
             m.addStringArg("freq");
             m.addIntArg(freq);
             m.addStringArg("amp");
-            m.addFloatArg(0.5*volume*amp);
+            m.addFloatArg(0.4*volume*amp);
             m.addStringArg("sustain");
             m.addFloatArg(sustain);
             m.addStringArg("accelerate");
