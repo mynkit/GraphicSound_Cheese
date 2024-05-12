@@ -394,7 +394,7 @@ private:
         m.addStringArg("s");
         m.addStringArg("simpleSineWave");
         m.addStringArg("amp");
-        m.addFloatArg(volume*1.2);
+        m.addFloatArg(volume*0.4);
         m.addStringArg("freq");
         m.addFloatArg(55);
         m.addStringArg("sustain");

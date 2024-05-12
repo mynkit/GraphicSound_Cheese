@@ -609,7 +609,7 @@ void ofApp::updateParam(){
     
     // 煙突
     if (chimneyTime == 0) {
-        playChimneyVibrateSound(0.25, 0.0, 1);
+        playChimneyVibrateSound(0.2, 0.0, 1);
     }
     
     // 時刻更新
