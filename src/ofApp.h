@@ -116,6 +116,13 @@ public:
     vector<float> sawParFreqs = {0.022, 0.013, 0.01, 0.05, 0.008};
     vector<float> sawPan2Freqs = {0.03, 0.07, 0.05, 0., 0.03};
     vector<float> sawAmps = {1., 1.25, 1.5, 1.0, 0.5};
+    
+    vector<int> sineNodeIds = {200,201};
+    vector<float> sineFreqs = {554.365,493.883};
+    vector<float> sineParFreqs = {0.065,0.124};
+    vector<float> sinePan2Freqs = {3.53,2.7};
+    float sineVibratoFreq = 2.5;
+    float sineVibratoDepth = 0.1;
 		
 private:
     ofxJoystick joy_;

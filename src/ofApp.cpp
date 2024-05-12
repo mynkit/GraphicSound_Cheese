@@ -103,6 +103,32 @@ void ofApp::setup(){
         scSender.sendMessage(m, false);
         m.clear();
     }
+    // sineの準備
+    for (size_t i = 0; i < sineNodeIds.size(); ++i) {
+        m.setAddress("/n_free");
+        m.addIntArg(sineNodeIds[i]);
+        scSender.sendMessage(m, false);
+        m.clear();
+        m.setAddress("/s_new");
+        m.addStringArg("sineDry");
+        m.addIntArg(sineNodeIds[i]);
+        m.addIntArg(1);
+        m.addIntArg(0);
+        m.addStringArg("amp");
+        m.addFloatArg(0.);
+        m.addStringArg("freq");
+        m.addFloatArg(sineFreqs[i]);
+        m.addStringArg("parFreq");
+        m.addFloatArg(sineParFreqs[i]);
+        m.addStringArg("pan2Freq");
+        m.addFloatArg(sinePan2Freqs[i]);
+        m.addStringArg("vibratoFreq");
+        m.addFloatArg(sineVibratoFreq);
+        m.addStringArg("vibratoDepth");
+        m.addFloatArg(sineVibratoDepth);
+        scSender.sendMessage(m, false);
+        m.clear();
+    }
 }
 
 //--------------------------------------------------------------
@@ -156,6 +182,14 @@ void ofApp::update(){
         for (size_t i = 0; i < sawNodeIds.size(); ++i) {
             m.setAddress("/n_set");
             m.addIntArg(sawNodeIds[i]);
+            m.addStringArg("amp");
+            m.addFloatArg(0.);
+            scSender.sendMessage(m, false);
+            m.clear();
+        }
+        for (size_t i = 0; i < sineNodeIds.size(); ++i) {
+            m.setAddress("/n_set");
+            m.addIntArg(sineNodeIds[i]);
             m.addStringArg("amp");
             m.addFloatArg(0.);
             scSender.sendMessage(m, false);
@@ -323,6 +357,19 @@ void ofApp::updateParam(){
         }
         m.addStringArg("freq");
         m.addFloatArg(sawFreqs[i]*329.628/440.);
+        scSender.sendMessage(m, false);
+        m.clear();
+    }
+    float sineSynthVol = 0.8;
+    float sineAmp = 0.;
+    if (ellipse03Move) {
+        sineAmp = 0.12;
+    }
+    for (size_t i = 0; i < sineNodeIds.size(); ++i) {
+        m.setAddress("/n_set");
+        m.addIntArg(sineNodeIds[i]);
+        m.addStringArg("amp");
+        m.addFloatArg(sineSynthVol*sineAmp);
         scSender.sendMessage(m, false);
         m.clear();
     }
@@ -779,6 +826,12 @@ void ofApp::exit(){
     for (size_t i = 0; i < sawNodeIds.size(); ++i) {
         m.setAddress("/n_free");
         m.addIntArg(sawNodeIds[i]);
+        scSender.sendMessage(m, false);
+        m.clear();
+    }
+    for (size_t i = 0; i < sineNodeIds.size(); ++i) {
+        m.setAddress("/n_free");
+        m.addIntArg(sineNodeIds[i]);
         scSender.sendMessage(m, false);
         m.clear();
     }
