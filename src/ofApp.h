@@ -390,25 +390,25 @@ private:
         m.addFloatArg(0.05);
         sdSender.sendMessage(m, false);
         m.clear();
-        m.setAddress("/dirt/play");
-        m.addStringArg("s");
-        m.addStringArg("simpleSineWave");
-        m.addStringArg("amp");
-        m.addFloatArg(volume*0.4);
-        m.addStringArg("freq");
-        m.addFloatArg(55);
-        m.addStringArg("sustain");
-        m.addFloatArg(3);
-        m.addStringArg("theta");
-        m.addFloatArg(theta);
-        m.addStringArg("dis");
-        m.addFloatArg(dis);
-        m.addStringArg("orbit");
-        m.addIntArg(5);
-        m.addStringArg("latency");
-        m.addFloatArg(0.05);
-        sdSender.sendMessage(m, false);
-        m.clear();
+        // m.setAddress("/dirt/play");
+        // m.addStringArg("s");
+        // m.addStringArg("simpleSineWave");
+        // m.addStringArg("amp");
+        // m.addFloatArg(volume*0.4);
+        // m.addStringArg("freq");
+        // m.addFloatArg(55);
+        // m.addStringArg("sustain");
+        // m.addFloatArg(3);
+        // m.addStringArg("theta");
+        // m.addFloatArg(theta);
+        // m.addStringArg("dis");
+        // m.addFloatArg(dis);
+        // m.addStringArg("orbit");
+        // m.addIntArg(5);
+        // m.addStringArg("latency");
+        // m.addFloatArg(0.05);
+        // sdSender.sendMessage(m, false);
+        // m.clear();
     }
     
     float Max(float a, float b) {

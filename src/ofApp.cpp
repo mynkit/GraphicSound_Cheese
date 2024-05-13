@@ -4,9 +4,9 @@
 void ofApp::setup(){
     ofSetFrameRate(SAMPLERATE);
     ofEnableAntiAliasing();
-    ofEnableSmoothing();
-    ofEnableArbTex();
-    ofEnablePointSprites();
+    // ofEnableSmoothing();
+    // ofEnableArbTex();
+    // ofEnablePointSprites();
     
     // OSCのセッティング
     scSender.setup(HOST, SCPORT);
@@ -291,7 +291,7 @@ void ofApp::update(){
             c0-1.06,0-3.09,0-3.09V66.42"/>
     </g>
     </svg>
-    )",int(ofGetWidth()*1.3), int(ofGetHeight()*1.3), backgroundColor,backgroundColor,backgroundColor, backgroundColor,backgroundColor,backgroundColor, rotaryMechanismBottomX1, rotaryMechanismBottomY1, rotaryMechanismBottomX2, rotaryMechanismBottomY1,rotaryMechanismBottomX1,rotaryMechanismBottomY2,rotaryMechanismBottomX2, rotaryMechanismBottomY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,mold07Position.x,mold07Position.y,mold07Position.x-12.85,mold07SinkY+12.85,mold07SinkDepth,backgroundColor,backgroundColor,backgroundColor,mold09Position.x,mold09Position.y,mold09Position.x-12.85,mold09SinkY+12.85,mold09SinkDepth,backgroundColor,backgroundColor,backgroundColor,mold01Position.x,mold01Position.y,mold01Position.x-12.85,mold01SinkY+12.85,mold01SinkDepth,backgroundColor,backgroundColor,backgroundColor,mold02Position.x,mold02Position.y,mold03Position.x,mold03Position.y,mold04Position.x,mold04Position.y,mold05Position.x,mold05Position.y,mold06Position.x,mold06Position.y,mold06Position.x-12.85,mold06SinkY+12.85,mold06SinkDepth,backgroundColor,backgroundColor,backgroundColor,mold08Position.x,mold08Position.y, ellipse03Translate, ellipse03Translate, -1338.75+chimneyVibrateX,-1284.84+chimneyVibrateX,-1230.93+chimneyVibrateX,-1338.75+chimneyVibrateX,-1175.3+chimneyVibrateX,-1323.57+chimneyVibrateX,-1416.19+chimneyVibrateX,-1323.57+chimneyVibrateX,-1366.02+chimneyVibrateX,-1366.02+chimneyVibrateX,-1323.57+chimneyVibrateX,chimneyVibrateX,  backgroundColor,backgroundColor,backgroundColor);
+    )",int(ofGetHeight()*1.3), int(ofGetHeight()*1.3), backgroundColor,backgroundColor,backgroundColor, backgroundColor,backgroundColor,backgroundColor, rotaryMechanismBottomX1, rotaryMechanismBottomY1, rotaryMechanismBottomX2, rotaryMechanismBottomY1,rotaryMechanismBottomX1,rotaryMechanismBottomY2,rotaryMechanismBottomX2, rotaryMechanismBottomY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,rotaryMechanismTopX1,rotaryMechanismTopY1,rotaryMechanismTopX2,rotaryMechanismTopY2,mold07Position.x,mold07Position.y,mold07Position.x-12.85,mold07SinkY+12.85,mold07SinkDepth,backgroundColor,backgroundColor,backgroundColor,mold09Position.x,mold09Position.y,mold09Position.x-12.85,mold09SinkY+12.85,mold09SinkDepth,backgroundColor,backgroundColor,backgroundColor,mold01Position.x,mold01Position.y,mold01Position.x-12.85,mold01SinkY+12.85,mold01SinkDepth,backgroundColor,backgroundColor,backgroundColor,mold02Position.x,mold02Position.y,mold03Position.x,mold03Position.y,mold04Position.x,mold04Position.y,mold05Position.x,mold05Position.y,mold06Position.x,mold06Position.y,mold06Position.x-12.85,mold06SinkY+12.85,mold06SinkDepth,backgroundColor,backgroundColor,backgroundColor,mold08Position.x,mold08Position.y, ellipse03Translate, ellipse03Translate, -1338.75+chimneyVibrateX,-1284.84+chimneyVibrateX,-1230.93+chimneyVibrateX,-1338.75+chimneyVibrateX,-1175.3+chimneyVibrateX,-1323.57+chimneyVibrateX,-1416.19+chimneyVibrateX,-1323.57+chimneyVibrateX,-1366.02+chimneyVibrateX,-1366.02+chimneyVibrateX,-1323.57+chimneyVibrateX,chimneyVibrateX,  backgroundColor,backgroundColor,backgroundColor);
     
     svg.loadFromString(svgCode);
     if (!updateParamStop) updateParam();
@@ -609,7 +609,7 @@ void ofApp::updateParam(){
     
     // 煙突
     if (chimneyTime == 0) {
-        playChimneyVibrateSound(0.2, 0.0, 1);
+        playChimneyVibrateSound(0.3, 0.0, 1);
     }
     
     // 時刻更新
@@ -655,6 +655,8 @@ void ofApp::updateParam(){
 void ofApp::draw(){
     ofBackground(backgroundColor, 0);
 //    ofSetCurveResolution(120);
+    float margin = (ofGetWidth()-ofGetHeight())/2.;
+    ofTranslate(margin, 0);
     svg.draw();
     
     if (updateParamStop) {
@@ -663,6 +665,25 @@ void ofApp::draw(){
         ofRectangle pauseTxtSize = getBitmapStringBoundingBox(pauseTxt);
         ofDrawBitmapString(pauseTxt, ofGetWidth()*0.5 - pauseTxtSize.width*0.5, ofGetHeight()*0.5 - pauseTxtSize.height*0.5);
     }
+
+    // yohaku
+    ofTranslate(-margin, 0);
+    ofRectangle marginLeft;
+    marginLeft.x = 0;
+    marginLeft.y = 0;
+    marginLeft.width = margin;
+    marginLeft.height = ofGetHeight();
+    
+    ofRectangle marginRight;
+    marginRight.x = margin + ofGetHeight();
+    marginRight.y = 0;
+    marginRight.width = margin;
+    marginRight.height = ofGetHeight();
+
+    ofSetColor(255);
+    ofDrawRectangle(marginLeft);
+    ofDrawRectangle(marginRight);
+
 }
 
 //--------------------------------------------------------------

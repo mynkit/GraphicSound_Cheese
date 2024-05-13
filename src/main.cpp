@@ -5,9 +5,9 @@
 int main( ){
     ofGLFWWindowSettings settings;
 
-    settings.setSize(1000, 1000);
+    settings.setSize(1024, 1024);
     settings.decorated = false;
-    settings.windowMode = OF_WINDOW;
+    settings.windowMode = OF_FULLSCREEN;
 
     ofCreateWindow(settings);
     ofRunApp(new ofApp());
