@@ -10,11 +10,13 @@
 #define HOST "localhost"
 #define SCPORT 57110
 #define SDPORT 57120
+#define MYPORT 12345
 
 class ofApp : public ofBaseApp{
 
 public:
     void setup();
+    void sNew();
     void update();
     void updateParam();
     void draw();
@@ -41,6 +43,12 @@ public:
     // OSC
     ofxOscSender scSender;
     ofxOscSender sdSender;
+    
+    // SuperDirt Start Detection
+    ofxOscReceiver receiver;
+    bool isSDBooted;
+    int sdBootTiming;
+    string displayString;
     
     bool updateParamStop = false;
     

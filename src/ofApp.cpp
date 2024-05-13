@@ -11,6 +11,11 @@ void ofApp::setup(){
     // OSCのセッティング
     scSender.setup(HOST, SCPORT);
     sdSender.setup(HOST, SDPORT);
+
+    // SuperDirt Boot
+    isSDBooted = false;
+    sdBootTiming = 0;
+    receiver.setup(MYPORT);
     
     // GamePadのセットアップ
     joy_.setup(GLFW_JOYSTICK_1);
@@ -76,6 +81,11 @@ void ofApp::setup(){
     chimneyVibrateX = 0.;
     chimneyVibrateXRange = 3;
     
+    sNew();
+}
+
+//--------------------------------------------------------------
+void ofApp::sNew(){
     // sawの準備
     ofxOscMessage m;
     for (size_t i = 0; i < sawNodeIds.size(); ++i) {
@@ -134,6 +144,28 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     
+    // SuperDirt Setup
+    while (receiver.hasWaitingMessages()) {
+        ofxOscMessage m;
+        receiver.getNextMessage(m);
+        if (m.getAddress() == "/sdboot") {
+            isSDBooted = true;
+            sNew();
+            sdBootTiming = (int)ofGetElapsedTimeMillis();
+        }
+    }
+    if (!isSDBooted) {
+        displayString = "Booting sound server...";
+    } else if ((int)ofGetElapsedTimeMillis() < sdBootTiming+1000) {
+        displayString = "Start!";
+        if ((int)ofGetElapsedTimeMillis() > sdBootTiming+900) {
+            sNew();
+        }
+        return;
+    } else {
+        displayString = "";
+    }
+
     // chack all button for push
     for (int i = 0; i < joy_.getButtonNum(); i++) {
         if (joy_.isPressed(i)) {
@@ -363,7 +395,7 @@ void ofApp::updateParam(){
     float sineSynthVol = 0.8;
     float sineAmp = 0.;
     if (ellipse03Move) {
-        sineAmp = 0.12;
+        sineAmp = 0.10;
     }
     for (size_t i = 0; i < sineNodeIds.size(); ++i) {
         m.setAddress("/n_set");
@@ -609,7 +641,7 @@ void ofApp::updateParam(){
     
     // 煙突
     if (chimneyTime == 0) {
-        playChimneyVibrateSound(0.3, 0.0, 1);
+        playChimneyVibrateSound(0.24, 0.0, 1);
     }
     
     // 時刻更新
@@ -658,7 +690,8 @@ void ofApp::draw(){
     float margin = (ofGetWidth()-ofGetHeight())/2.;
     ofTranslate(margin, 0);
     svg.draw();
-    
+    ofTranslate(-margin, 0);
+
     if (updateParamStop) {
         ofSetColor(255);
         string pauseTxt = "PAUSE";
@@ -667,7 +700,6 @@ void ofApp::draw(){
     }
 
     // yohaku
-    ofTranslate(-margin, 0);
     ofRectangle marginLeft;
     marginLeft.x = 0;
     marginLeft.y = 0;
@@ -680,10 +712,13 @@ void ofApp::draw(){
     marginRight.width = margin;
     marginRight.height = ofGetHeight();
 
-    ofSetColor(255);
+    ofSetColor(backgroundColor);
     ofDrawRectangle(marginLeft);
     ofDrawRectangle(marginRight);
 
+    // SuperDirt Booting Status
+    ofSetColor(0);
+    ofDrawBitmapString(displayString, ofGetWidth() - 20 - getBitmapStringBoundingBox(displayString).width, ofGetHeight()*0.6);
 }
 
 //--------------------------------------------------------------
