@@ -1,4 +1,3 @@
 ofxJoystick
-ofxMidi
 ofxOsc
 ofxSvg
