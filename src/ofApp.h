@@ -36,6 +36,8 @@ public:
     void gotMessage(ofMessage msg);
     void exit();
     
+    ofImage qrCode;
+    
     int defaultBackgroundColor = 255;
     int pausedBackgroundColor = 100;
     int backgroundColor = defaultBackgroundColor;

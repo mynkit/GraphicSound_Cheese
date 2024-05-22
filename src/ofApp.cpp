@@ -8,6 +8,9 @@ void ofApp::setup(){
     // ofEnableArbTex();
     // ofEnablePointSprites();
     
+    // QRコードの読み取り
+    qrCode.load("graphicsound_cheese.png");
+    
     // OSCのセッティング
     scSender.setup(HOST, SCPORT);
     sdSender.setup(HOST, SDPORT);
@@ -719,6 +722,9 @@ void ofApp::draw(){
     // SuperDirt Booting Status
     ofSetColor(0);
     ofDrawBitmapString(displayString, ofGetWidth() - 20 - getBitmapStringBoundingBox(displayString).width, ofGetHeight()*0.6);
+    
+    ofSetColor(255);
+    qrCode.draw(ofGetWidth() - 150, 10, 140, 140);
 }
 
 //--------------------------------------------------------------
